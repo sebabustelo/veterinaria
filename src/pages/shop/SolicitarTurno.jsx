@@ -576,6 +576,56 @@ const SolicitarTurno = () => {
             </p>
           </div>
         </section>
+      
+        <section className="selection-panel">
+          <header className="selection-header">
+            <h2>Elegí la sucursal Vettix</h2>
+            <p>
+              Seleccioná la clínica donde querés atenderte. Te mostraremos únicamente los
+              profesionales y servicios disponibles en esa ubicación.
+            </p>
+          </header>
+          <div className="select-row">
+            <div className="select-field">
+              <label htmlFor="sucursal">Sucursal</label>
+              <select
+                id="sucursal"
+                value={sucursalSeleccionada}
+                onChange={(e) => {
+                  setSucursalSeleccionada(Number(e.target.value));
+                  setFechaSeleccionada(null);
+                  setHoraSeleccionada(null);
+                }}
+              >
+                {sucursales.map((sucursal) => (
+                  <option key={sucursal.id} value={sucursal.id}>
+                    {sucursal.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {sucursalActiva && (
+            <div className="branch-card">
+              <div className="branch-card-header">
+                <h3>{sucursalActiva.nombre}</h3>
+                <span>{sucursalActiva.alias}</span>
+              </div>
+              <p className="branch-address">{sucursalActiva.direccion}</p>
+              <ul>
+                <li>
+                  <span>Tel:</span> {sucursalActiva.telefono}
+                </li>
+                <li>
+                  <span>Email:</span> {sucursalActiva.email}
+                </li>
+                <li>
+                  <span>Servicios destacados:</span> {sucursalActiva.notas}
+                </li>
+              </ul>
+            </div>
+          )}
+        </section>
 
         <section className="selection-panel">
           <header className="selection-header">
@@ -753,55 +803,6 @@ const SolicitarTurno = () => {
           )}
         </section>
 
-        <section className="selection-panel">
-          <header className="selection-header">
-            <h2>Elegí la sucursal Vettix</h2>
-            <p>
-              Seleccioná la clínica donde querés atenderte. Te mostraremos únicamente los
-              profesionales y servicios disponibles en esa ubicación.
-            </p>
-          </header>
-          <div className="select-row">
-            <div className="select-field">
-              <label htmlFor="sucursal">Sucursal</label>
-              <select
-                id="sucursal"
-                value={sucursalSeleccionada}
-                onChange={(e) => {
-                  setSucursalSeleccionada(Number(e.target.value));
-                  setFechaSeleccionada(null);
-                  setHoraSeleccionada(null);
-                }}
-              >
-                {sucursales.map((sucursal) => (
-                  <option key={sucursal.id} value={sucursal.id}>
-                    {sucursal.nombre}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          {sucursalActiva && (
-            <div className="branch-card">
-              <div className="branch-card-header">
-                <h3>{sucursalActiva.nombre}</h3>
-                <span>{sucursalActiva.alias}</span>
-              </div>
-              <p className="branch-address">{sucursalActiva.direccion}</p>
-              <ul>
-                <li>
-                  <span>Tel:</span> {sucursalActiva.telefono}
-                </li>
-                <li>
-                  <span>Email:</span> {sucursalActiva.email}
-                </li>
-                <li>
-                  <span>Servicios destacados:</span> {sucursalActiva.notas}
-                </li>
-              </ul>
-            </div>
-          )}
-        </section>
 
         <div className="turno-toggle">
           <button

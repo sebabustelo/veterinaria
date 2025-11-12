@@ -47,7 +47,7 @@ const valueHighlights = [
     {
         icon: "🏥",
         title: "5 sucursales",
-        description: "Belgrano y Núñez con internación, urgencias, spa y pet shop premium."
+        description: "Belgrano, Núñez y Saavedra con internación, urgencias, spa y pet shop premium."
     }
 ];
 
@@ -77,7 +77,7 @@ const Home = () => {
                     <div className="hero-content">
                         <span className="hero-tag">Clínica Veterinaria Integral</span>
                         <h1 className="hero-title">
-                            Vettix, excelencia veterinaria en Belgrano y Núñez
+                            Vettix, excelencia veterinaria en Belgrano, Núñez y Saavedra
                         </h1>
                         <p className="hero-subtitle">
                             Urgencias 24 horas, internación premium, spa veterinario y pet shop especializado. Más de 15 años cuidando a las mascotas de la ciudad con tecnología de última generación y un equipo humano excepcional.
@@ -93,7 +93,7 @@ const Home = () => {
                         </div>
                         <div className="hero-cta">
                             <Link to="/turnos" className="btn primary">Solicitar turno</Link>
-                            <Link to="/contactos" className="btn primary">Contactar equipo</Link>
+                            <Link to="/acercade" className="btn primary">Contactar equipo</Link>
                         </div>
                     </div>
                     <div className="hero-media">

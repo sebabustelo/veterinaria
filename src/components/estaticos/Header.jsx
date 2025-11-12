@@ -61,15 +61,15 @@ const Header = () => {
                         <span className="bar"></span>
                         <span className="bar"></span>
                     </div>
-                    
+
                     {/* Overlay para cerrar el menú */}
                     <div className={`nav-overlay ${open ? 'open' : ''}`} onClick={handleOverlayClick}></div>
-                    
+
                     {/* Overlay para cerrar el dropdown de usuario */}
                     {isUserMenuOpen && (
                         <div className="user-dropdown-overlay" onClick={handleUserDropdownClose}></div>
                     )}
-                    
+
                     <ul className={`nav-list ${open ? 'open' : ''}`}>
                         <li className="nav-item">
                             <Link to="/" className='nav-link' onClick={handleClose}>
@@ -82,14 +82,14 @@ const Header = () => {
                             </Link>
                         </li>
                         {user && (
-                        <li className="nav-item">
-                            <Link to="/turnos" className='nav-link' onClick={handleClose}>
-                                <i className="fa-solid fa-calendar-check"></i> Turnos
-                            </Link>
-                        
-                        </li>
+                            <li className="nav-item">
+                                <Link to="/turnos" className='nav-link' onClick={handleClose}>
+                                    <i className="fa-solid fa-calendar-check"></i> Turnos
+                                </Link>
+
+                            </li>
                         )}
-                        
+
                         {user && (
                             <li className="nav-item">
                                 <Link to="/mis-mascotas" className='nav-link' onClick={handleClose}>
@@ -98,29 +98,14 @@ const Header = () => {
                             </li>
                         )}
 
-                        <li className="nav-item">
-                            <Link to="/acercade" className='nav-link' onClick={handleClose}>
-                                <i className="fa-solid fa-address-card"></i> Nosotros
-                            </Link>
-                        </li>
-                        
-                        {isAdmin && (
-                            <li className="nav-item">
-                                <Link
-                                    to="/admin"
-                                    className="nav-link"
-                                    onClick={handleClose}
-                                >
-                                    <i className="fa-solid fa-gears"></i>
-                                </Link>
-                            </li>
-                        )}
+
+
 
                         {/* Menú de usuario para desktop */}
                         <li className="nav-item desktop-user-menu">
                             <Link to="#" className='nav-link' onClick={toggleUserMenu}>
                                 <i className="fa-solid fa-user-circle"></i>
-                               
+
                             </Link>
                             {isUserMenuOpen && (
                                 <div className="user-dropdown">
@@ -161,9 +146,9 @@ const Header = () => {
                                         <i className="fa-solid fa-shopping-bag"></i> Mis Pedidos
                                     </Link>
                                 </li>
-                                <li className="nav-item mobile-user-menu">
-                                    <Link to="/mis-mascotas" className='nav-link' onClick={handleClose}>
-                                        <i className="fa-solid fa-paw"></i> Mis Mascotas
+                                <li className="nav-item">
+                                    <Link to="/acercade" className='nav-link' onClick={handleClose}>
+                                        <i className="fa-solid fa-address-card"></i> Nosotros
                                     </Link>
                                 </li>
                                 <li className="nav-item mobile-user-menu">
@@ -177,6 +162,11 @@ const Header = () => {
                             </>
                         ) : (
                             <>
+                                <li className="nav-item">
+                                    <Link to="/acercade" className='nav-link' onClick={handleClose}>
+                                        <i className="fa-solid fa-address-card"></i> Nosotros
+                                    </Link>
+                                </li>
                                 <li className="nav-item mobile-user-menu">
                                     <Link to="/login" className='nav-link' onClick={handleClose}>
                                         <i className="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
@@ -189,6 +179,19 @@ const Header = () => {
                                 </li>
                             </>
                         )}
+
+                        {isAdmin && (
+                            <li className="nav-item">
+                                <Link
+                                    to="/admin"
+                                    className="nav-link"
+                                    onClick={handleClose}
+                                >
+                                    <i className="fa-solid fa-gears"></i>
+                                </Link>
+                            </li>
+                        )}
+
                     </ul>
                 </nav>
             </header>
