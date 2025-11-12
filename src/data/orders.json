@@ -1,0 +1,83 @@
+{
+  "orders": [
+    {
+      "id": 101,
+      "order_number": "VT-1001",
+      "user_email": "admin@vettix.com",
+      "created_at": "2025-10-15T09:30:00-03:00",
+      "status": "processing",
+      "total_amount": 12500,
+      "shipping_cost": 1500,
+      "order_items": [
+        {
+          "id": 1001,
+          "product_name": "Plan de Bienestar Felino",
+          "quantity": 1,
+          "unit_price": 7500,
+          "total_price": 7500,
+          "product_image": "/img/productos/alimento_gato.webp"
+        },
+        {
+          "id": 1002,
+          "product_name": "Tratamiento Antipulgas Premium",
+          "quantity": 2,
+          "unit_price": 2500,
+          "total_price": 5000,
+          "product_image": "/img/productos/pipeta.png"
+        }
+      ],
+      "shipping": {
+        "recipient_name": "Sofía Admin",
+        "shipping_address": "Av. Siempre Viva 742",
+        "shipping_city": "Buenos Aires",
+        "shipping_status": "processing",
+        "tracking_number": "TRACK-AR-001"
+      },
+      "payment": {
+        "payment_method": "Tarjeta de crédito",
+        "payment_status": "completed",
+        "amount": 12500
+      }
+    },
+    {
+      "id": 102,
+      "order_number": "VT-1002",
+      "user_email": "juanperez@mail.com",
+      "created_at": "2025-11-02T15:45:00-03:00",
+      "status": "pending",
+      "total_amount": 8600,
+      "shipping_cost": 900,
+      "order_items": [
+        {
+          "id": 1003,
+          "product_name": "Baño y Corte para Caninos",
+          "quantity": 1,
+          "unit_price": 4200,
+          "total_price": 4200,
+          "product_image": "/img/productos/shampoo.png"
+        },
+        {
+          "id": 1004,
+          "product_name": "Consulta Veterinaria General",
+          "quantity": 1,
+          "unit_price": 3500,
+          "total_price": 3500,
+          "product_image": "/img/productos/transporte_gatos.jpg"
+        }
+      ],
+      "shipping": {
+        "recipient_name": "Juan Perez",
+        "shipping_address": "Calle Falsa 123",
+        "shipping_city": "Lanús",
+        "shipping_status": "pending",
+        "tracking_number": null
+      },
+      "payment": {
+        "payment_method": "Mercado Pago",
+        "payment_status": "pending",
+        "amount": 8600
+      }
+    }
+  ]
+}
+

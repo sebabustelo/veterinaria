@@ -1,0 +1,120 @@
+[
+ 
+  {
+    "id": "client-005",
+    "name": "Florencia Méndez",
+    "email": "florencia.mendez@vettix.com",
+    "phone": "11 5555-0105",
+    "pets": [
+      {
+        "id": "pet-005",
+        "name": "Nina",
+        "species": "dog",
+        "breed": "Caniche Toy",
+        "age": 6,
+        "weight": 4.1,
+        "notes": "Chequeo cardiológico semestral.",
+        "chronicConditions": "Soplo grado II"
+      },
+      {
+        "id": "pet-006",
+        "name": "Tito",
+        "species": "small_mammal",
+        "breed": "Cuy",
+        "age": 1,
+        "weight": 0.8,
+        "notes": "Controles nutricionales periódicos.",
+        "chronicConditions": null
+      }
+    ]
+  },
+  {
+    "id": "client-006",
+    "name": "Julián Herrera",
+    "email": "julian.herrera@vettix.com",
+    "phone": "11 5555-0106",
+    "pets": []
+  },
+  {
+    "id": "client-007",
+    "name": "Carolina Díaz",
+    "email": "carolina.diaz@vettix.com",
+    "phone": "11 5555-0107",
+    "pets": [
+      {
+        "id": "pet-007",
+        "name": "Fiona",
+        "species": "cat",
+        "breed": "British Shorthair",
+        "age": 4,
+        "weight": 5.4,
+        "notes": "Plan nutricional premium.",
+        "chronicConditions": null
+      }
+    ]
+  },
+  {
+    "id": "client-008",
+    "name": "Ezequiel Gómez",
+    "email": "ezequiel.gomez@vettix.com",
+    "phone": "11 5555-0108",
+    "pets": [
+      {
+        "id": "pet-008",
+        "name": "Zeus",
+        "species": "dog",
+        "breed": "Pastor Alemán",
+        "age": 7,
+        "weight": 32,
+        "notes": "Chequeo geriátrico anual y vacunas.",
+        "chronicConditions": "Artritis leve"
+      }
+    ]
+  },
+  {
+    "id": "client-009",
+    "name": "Nadia Cabrera",
+    "email": "nadia.cabrera@vettix.com",
+    "phone": "11 5555-0109",
+    "pets": [
+      {
+        "id": "pet-009",
+        "name": "Kira",
+        "species": "reptile",
+        "breed": "Iguana verde",
+        "age": 5,
+        "weight": 3.3,
+        "notes": "Controles de calcio trimestrales.",
+        "chronicConditions": null
+      }
+    ]
+  },
+  {
+    "id": "client-010",
+    "name": "Pablo Gutiérrez",
+    "email": "pablo.gutierrez@vettix.com",
+    "phone": "11 5555-0110",
+    "pets": [
+      {
+        "id": "pet-010",
+        "name": "Mora",
+        "species": "dog",
+        "breed": "Golden Retriever",
+        "age": 1,
+        "weight": 16,
+        "notes": "Plan de vacunación al día.",
+        "chronicConditions": null
+      },
+      {
+        "id": "pet-011",
+        "name": "Chispa",
+        "species": "dog",
+        "breed": "Jack Russell",
+        "age": 9,
+        "weight": 9.5,
+        "notes": "Controles cardíacos trimestrales.",
+        "chronicConditions": "Hipertensión leve"
+      }
+    ]
+  }
+]

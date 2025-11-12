@@ -1,0 +1,74 @@
+[
+  {
+    "imagen": "/img/cuchas/cucha1.jpg",
+    "nombre": "Cucha Deluxe Clásica",
+    "descripcion": "Diseñada para brindar confort y elegancia, ideal para mascotas medianas y grandes. Con base antideslizante y acolchado extra. Fabricada con tela impermeable de alta resistencia, interior de espuma viscoelástica y costuras reforzadas.",
+    "stock": 81,
+    "categoria": "Cucha",
+    "precio": 97,
+    "id": "1"
+  },
+  {
+    "imagen": "/img/cuchas/cucha2.jpg",
+    "nombre": "Cucha Eco Confort",
+    "descripcion": "Fabricada con materiales reciclados, liviana y resistente. Ideal para climas templados y uso en interiores. Estructura de plástico reciclado, funda de algodón orgánico y relleno de fibras sintéticas hipoalergénicas.",
+    "stock": 52,
+    "categoria": "Cucha",
+    "precio": 5,
+    "id": "2"
+  },
+  {
+    "imagen": "/img/cuchas/cucha3.jpg",
+    "nombre": "Cucha Térmica",
+    "descripcion": "Protege del frío y la humedad. Revestida con materiales térmicos, perfecta para invierno y espacios exteriores. Exterior de poliéster impermeable, interior de lana sintética y base aislante de goma EVA.",
+    "stock": 23,
+    "categoria": "Funda",
+    "precio": 74,
+    "id": "3"
+  },
+  {
+    "imagen": "/img/cuchas/cucha4.jpg",
+    "nombre": "Cucha Modular Urban",
+    "descripcion": "Moderna, desmontable y fácil de transportar. Su diseño urbano combina con cualquier ambiente del hogar. Paneles de polipropileno, uniones de silicona flexible y funda de microfibra lavable.",
+    "stock": 87,
+    "categoria": "Cucha",
+    "precio": 47,
+    "id": "4"
+  },
+  {
+    "imagen": "/img/fundas/funda2.jpg",
+    "nombre": "Funda Estilo Campo",
+    "descripcion": "Textura rústica y resistente. Ideal para ambientes rurales o mascotas aventureras que disfrutan del aire libre. Confeccionada en lona gruesa de algodón y costuras dobles para mayor durabilidad.",
+    "stock": 33,
+    "categoria": "Funda",
+    "precio": 48,
+    "id": "8"
+  },
+  {
+    "imagen": "/img/fundas/funda1.jpg",
+    "nombre": "Funda Ultra Soft",
+    "descripcion": "Máxima suavidad para el descanso de tu mascota. Lavable, antialérgica y disponible en varios colores. Tejido exterior de microfibra ultrasuave y relleno de vellón siliconado.",
+    "stock": 9,
+    "categoria": "Funda",
+    "precio": 97,
+    "id": "9"
+  },
+  {
+    "imagen": "/img/fundas/funda3.jpg",
+    "nombre": "Funda Soft",
+    "descripcion": "Práctica, cómoda y acolchada. Ideal para usar sobre colchones o dentro de cuchas rígidas. Exterior de algodón peinado y relleno de espuma de poliuretano.",
+    "stock": 6,
+    "categoria": "Funda",
+    "precio": 97,
+    "id": "10"
+  },
+  {
+    "imagen": "/img/fundas/funda4.jpg",
+    "nombre": "Funda Doble",
+    "descripcion": "Funda reversible con doble cara: una térmica para invierno y otra fresca para verano. ¡2 en 1! Cara térmica de polar y cara fresca de algodón, con relleno de fibra hueca siliconada.",
+    "stock": 6,
+    "categoria": "Funda",
+    "precio": 97,
+    "id": "11"
+  }
+]

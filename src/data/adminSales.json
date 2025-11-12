@@ -1,0 +1,324 @@
+{
+  "ventas": [
+    {
+      "id": 1,
+      "fecha": "2025-01-10T10:30:00.000",
+      "cliente_id": 1,
+      "cliente_nombre": "Juan Perez",
+      "sucursal_id": 1,
+      "sucursal_nombre": "Veterinaria Central",
+      "total": 30000.00,
+      "items": [
+        {
+          "id": 1,
+          "producto_id": 1,
+          "producto_nombre": "Alimento balanceado premium perro",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 25000.00,
+          "subtotal": 25000.00
+        },
+        {
+          "id": 2,
+          "producto_id": 3,
+          "producto_nombre": "Pipeta antipulgas",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 5000.00,
+          "subtotal": 5000.00
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "fecha": "2025-01-11T16:45:00.000",
+      "cliente_id": 2,
+      "cliente_nombre": "Maria Gomez",
+      "sucursal_id": 2,
+      "sucursal_nombre": "Veterinaria Norte",
+      "total": 18000.00,
+      "items": [
+        {
+          "id": 3,
+          "producto_id": 2,
+          "producto_nombre": "Alimento gato adulto",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 18000.00,
+          "subtotal": 18000.00
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "fecha": "2025-01-12T11:15:00.000",
+      "cliente_id": 3,
+      "cliente_nombre": "Laura Lopez",
+      "sucursal_id": 1,
+      "sucursal_nombre": "Veterinaria Central",
+      "total": 12500.00,
+      "items": [
+        {
+          "id": 4,
+          "producto_id": 4,
+          "producto_nombre": "Shampoo hipoalergénico",
+          "tipo": "producto",
+          "cantidad": 2,
+          "precio_unitario": 3500.00,
+          "subtotal": 7000.00
+        },
+        {
+          "id": 5,
+          "producto_id": 3,
+          "producto_nombre": "Pipeta antipulgas",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 5000.00,
+          "subtotal": 5000.00
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "fecha": "2025-01-13T14:20:00.000",
+      "cliente_id": 1,
+      "cliente_nombre": "Juan Perez",
+      "sucursal_id": 1,
+      "sucursal_nombre": "Veterinaria Central",
+      "total": 8500.00,
+      "items": [
+        {
+          "id": 6,
+          "servicio_id": 1,
+          "servicio_nombre": "Consulta general",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 8000.00,
+          "subtotal": 8000.00
+        },
+        {
+          "id": 7,
+          "producto_id": 3,
+          "producto_nombre": "Pipeta antipulgas",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 500.00,
+          "subtotal": 500.00
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "fecha": "2025-10-05T10:15:00.000",
+      "cliente_id": 4,
+      "cliente_nombre": "Lucía García",
+      "sucursal_id": 1,
+      "sucursal_nombre": "Veterinaria Central",
+      "total": 12700.00,
+      "items": [
+        {
+          "id": 8,
+          "producto_id": 9,
+          "producto_nombre": "Hueso de cuero natural",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 4500.00,
+          "subtotal": 4500.00
+        },
+        {
+          "id": 9,
+          "servicio_id": 3,
+          "servicio_nombre": "Baño y corte",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 7000.00,
+          "subtotal": 7000.00
+        },
+        {
+          "id": 10,
+          "producto_id": 8,
+          "producto_nombre": "Desparasitante interno",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 1200.00,
+          "subtotal": 1200.00
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "fecha": "2025-10-12T16:30:00.000",
+      "cliente_id": 5,
+      "cliente_nombre": "Martín Rodríguez",
+      "sucursal_id": 2,
+      "sucursal_nombre": "Veterinaria Norte",
+      "total": 8900.00,
+      "items": [
+        {
+          "id": 11,
+          "producto_id": 10,
+          "producto_nombre": "Pelota interactiva con sonido",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 3200.00,
+          "subtotal": 3200.00
+        },
+        {
+          "id": 12,
+          "servicio_id": 2,
+          "servicio_nombre": "Vacunación",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 5000.00,
+          "subtotal": 5000.00
+        },
+        {
+          "id": 13,
+          "producto_id": 17,
+          "producto_nombre": "Snacks dentales",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 700.00,
+          "subtotal": 700.00
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "fecha": "2025-10-18T11:45:00.000",
+      "cliente_id": 6,
+      "cliente_nombre": "Carolina López",
+      "sucursal_id": 3,
+      "sucursal_nombre": "Veterinaria Belgrano",
+      "total": 21500.00,
+      "items": [
+        {
+          "id": 14,
+          "producto_id": 13,
+          "producto_nombre": "Antiinflamatorio para perros",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 8500.00,
+          "subtotal": 8500.00
+        },
+        {
+          "id": 15,
+          "servicio_id": 4,
+          "servicio_nombre": "Cirugía menor",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 12000.00,
+          "subtotal": 12000.00
+        },
+        {
+          "id": 16,
+          "producto_id": 7,
+          "producto_nombre": "Correa extensible",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 1000.00,
+          "subtotal": 1000.00
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "fecha": "2025-10-25T14:20:00.000",
+      "cliente_id": 7,
+      "cliente_nombre": "Diego Sánchez",
+      "sucursal_id": 4,
+      "sucursal_nombre": "Veterinaria Nuñez",
+      "total": 16800.00,
+      "items": [
+        {
+          "id": 17,
+          "producto_id": 14,
+          "producto_nombre": "Vitaminas para gatos",
+          "tipo": "producto",
+          "cantidad": 2,
+          "precio_unitario": 5200.00,
+          "subtotal": 10400.00
+        },
+        {
+          "id": 18,
+          "servicio_id": 11,
+          "servicio_nombre": "Limpieza dental",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 8000.00,
+          "subtotal": 8000.00
+        },
+        {
+          "id": 19,
+          "producto_id": 16,
+          "producto_nombre": "Cepillo deslanador",
+          "tipo": "producto",
+          "cantidad": 1,
+          "precio_unitario": 4800.00,
+          "subtotal": 4800.00
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "fecha": "2025-11-05T09:30:00.000",
+      "cliente_id": 8,
+      "cliente_nombre": "Florencia Pérez",
+      "sucursal_id": 5,
+      "sucursal_nombre": "Veterinaria Saavedra",
+      "total": 38500.00,
+      "items": [
+        {
+          "id": 20,
+          "servicio_id": 1,
+          "servicio_nombre": "Consulta general",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 8000.00,
+          "subtotal": 8000.00
+        },
+        {
+          "id": 21,
+          "servicio_id": 2,
+          "servicio_nombre": "Vacunación",
+          "tipo": "servicio",
+          "cantidad": 2,
+          "precio_unitario": 5000.00,
+          "subtotal": 10000.00
+        },
+        {
+          "id": 22,
+          "servicio_id": 3,
+          "servicio_nombre": "Baño y corte",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 7000.00,
+          "subtotal": 7000.00
+        },
+        {
+          "id": 23,
+          "servicio_id": 6,
+          "servicio_nombre": "Spa para mascotas",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 9000.00,
+          "subtotal": 9000.00
+        },
+        {
+          "id": 24,
+          "servicio_id": 10,
+          "servicio_nombre": "Desparasitación",
+          "tipo": "servicio",
+          "cantidad": 1,
+          "precio_unitario": 4500.00,
+          "subtotal": 4500.00
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "total_ventas": 9,
+    "total_ingresos": 155900.00,
+    "fecha_actualizacion": "2025-11-08T08:17:18.000"
+  }
+}

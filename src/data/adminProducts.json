@@ -1,0 +1,316 @@
+{
+    "productos": [
+      {
+        "id": 1,
+        "nombre": "Alimento balanceado premium perro",
+        "descripcion": "Bolsa de 15 kg",
+        "precio": 25000.00,
+        "stock": 20,
+        "categoria_id": 1,
+        "categoria_nombre": "alimentos",
+        "activo": true
+      },
+      {
+        "id": 2,
+        "nombre": "Alimento gato adulto",
+        "descripcion": "Bolsa de 10 kg",
+        "precio": 18000.00,
+        "stock": 15,
+        "categoria_id": 1,
+        "categoria_nombre": "alimentos",
+        "activo": true
+      },
+      {
+        "id": 3,
+        "nombre": "Pipeta antipulgas",
+        "descripcion": "Pipeta para perros medianos",
+        "precio": 5000.00,
+        "stock": 50,
+        "categoria_id": 3,
+        "categoria_nombre": "medicamentos",
+        "activo": true
+      },
+      {
+        "id": 4,
+        "nombre": "Shampoo hipoalergénico",
+        "descripcion": "Para piel sensible",
+        "precio": 3500.00,
+        "stock": 30,
+        "categoria_id": 4,
+        "categoria_nombre": "higiene",
+        "activo": true
+      },
+      {
+        "id": 5,
+        "nombre": "Cama para perro mediano",
+        "descripcion": "Cama ortopédica tamaño mediano",
+        "precio": 12000.00,
+        "stock": 8,
+        "categoria_id": 2,
+        "categoria_nombre": "accesorios",
+        "activo": true
+      },
+      {
+        "id": 6,
+        "nombre": "Juguete interactivo",
+        "descripcion": "Juguete dispensador de comida",
+        "precio": 4500.00,
+        "stock": 15,
+        "categoria_id": 5,
+        "categoria_nombre": "juguetes",
+        "activo": true
+      },
+      {
+        "id": 7,
+        "nombre": "Correa extensible",
+        "descripcion": "Correa retráctil 5 metros",
+        "precio": 6000.00,
+        "stock": 10,
+        "categoria_id": 2,
+        "categoria_nombre": "accesorios",
+        "activo": true
+      },
+      {
+        "id": 8,
+        "nombre": "Desparasitante interno",
+        "descripcion": "Tabletas desparasitantes 6 unidades",
+        "precio": 3500.00,
+        "stock": 25,
+        "categoria_id": 3,
+        "categoria_nombre": "medicamentos",
+        "activo": true
+      },
+      {
+        "id": 9,
+        "nombre": "Hueso de cuero natural",
+        "descripcion": "Hueso masticable para perros grandes",
+        "precio": 4500.00,
+        "stock": 30,
+        "categoria_id": 5,
+        "categoria_nombre": "juguetes",
+        "activo": true
+      },
+      {
+        "id": 10,
+        "nombre": "Pelota interactiva con sonido",
+        "descripcion": "Pelota que emite sonidos al moverse",
+        "precio": 3200.00,
+        "stock": 25,
+        "categoria_id": 5,
+        "categoria_nombre": "juguetes",
+        "activo": true
+      },
+      {
+        "id": 11,
+        "nombre": "Rascador para gatos 3 niveles",
+        "descripcion": "Rascador con plataformas y juguetes colgantes",
+        "precio": 15000.00,
+        "stock": 12,
+        "categoria_id": 5,
+        "categoria_nombre": "juguetes",
+        "activo": true
+      },
+      {
+        "id": 12,
+        "nombre": "Antiinflamatorio para perros",
+        "descripcion": "Tabletas antiinflamatorias 20 unidades",
+        "precio": 8500.00,
+        "stock": 40,
+        "categoria_id": 6,
+        "categoria_nombre": "farmacia",
+        "activo": true
+      },
+      {
+        "id": 13,
+        "nombre": "Vitaminas para gatos",
+        "descripcion": "Suplemento vitamínico mensual",
+        "precio": 5200.00,
+        "stock": 35,
+        "categoria_id": 6,
+        "categoria_nombre": "farmacia",
+        "activo": true
+      },
+      {
+        "id": 14,
+        "nombre": "Transportadora para gatos",
+        "descripcion": "Transportadora plástica tamaño mediano",
+        "precio": 18000.00,
+        "stock": 8,
+        "categoria_id": 7,
+        "categoria_nombre": "transporte",
+        "activo": true
+      },
+      {
+        "id": 15,
+        "nombre": "Arnés reflectante",
+        "descripcion": "Arnés de seguridad con material reflectante",
+        "precio": 7500.00,
+        "stock": 15,
+        "categoria_id": 2,
+        "categoria_nombre": "accesorios",
+        "activo": true
+      },
+      {
+        "id": 16,
+        "nombre": "Cepillo deslanador",
+        "descripcion": "Cepillo profesional para quitar pelo muerto",
+        "precio": 4800.00,
+        "stock": 20,
+        "categoria_id": 4,
+        "categoria_nombre": "higiene",
+        "activo": true
+      },
+      {
+        "id": 17,
+        "nombre": "Snacks dentales",
+        "descripcion": "Snacks para limpieza dental, paquete 15 unidades",
+        "precio": 3800.00,
+        "stock": 50,
+        "categoria_id": 1,
+        "categoria_nombre": "alimentos",
+        "activo": true
+      },
+      {
+        "id": 18,
+        "nombre": "Shampoo antiparasitario",
+        "descripcion": "Shampoo para eliminar pulgas y garrapatas",
+        "precio": 6200.00,
+        "stock": 18,
+        "categoria_id": 4,
+        "categoria_nombre": "higiene",
+        "activo": true
+      }
+    ],
+    "servicios": [
+      {
+        "id": 1,
+        "nombre": "Consulta general",
+        "descripcion": "Consulta de rutina para revisión de mascota",
+        "precio": 8000.00,
+        "duracion_minutos": 30,
+        "categoria_id": 1,
+        "categoria_nombre": "veterinaria",
+        "activo": true
+      },
+      {
+        "id": 2,
+        "nombre": "Vacunación",
+        "descripcion": "Aplicación de vacunas anuales",
+        "precio": 5000.00,
+        "duracion_minutos": 15,
+        "categoria_id": 1,
+        "categoria_nombre": "veterinaria",
+        "activo": true
+      },
+      {
+        "id": 3,
+        "nombre": "Baño y corte",
+        "descripcion": "Servicio de peluquería completa",
+        "precio": 7000.00,
+        "duracion_minutos": 60,
+        "categoria_id": 2,
+        "categoria_nombre": "estética",
+        "activo": true
+      },
+      {
+        "id": 4,
+        "nombre": "Cirugía menor",
+        "descripcion": "Procedimientos quirúrgicos simples",
+        "precio": 15000.00,
+        "duracion_minutos": 120,
+        "categoria_id": 1,
+        "categoria_nombre": "veterinaria",
+        "activo": true
+      },
+      {
+        "id": 6,
+        "nombre": "Spa para mascotas",
+        "descripcion": "Tratamiento de relajación y estética completa",
+        "precio": 9000.00,
+        "duracion_minutos": 90,
+        "categoria_id": 2,
+        "categoria_nombre": "estética",
+        "activo": true
+      },
+      {
+        "id": 7,
+        "nombre": "Peluquería",
+        "descripcion": "Corte de pelo y arreglo general",
+        "precio": 7000.00,
+        "duracion_minutos": 60,
+        "categoria_id": 2,
+        "categoria_nombre": "estética",
+        "activo": true
+      },
+      {
+        "id": 8,
+        "nombre": "Atención 24 horas",
+        "descripcion": "Servicio de atención veterinaria de emergencia",
+        "precio": 12000.00,
+        "duracion_minutos": null,
+        "categoria_id": 4,
+        "categoria_nombre": "emergencias",
+        "activo": true
+      },
+      {
+        "id": 9,
+        "nombre": "Internación",
+        "descripcion": "Cuidado y monitoreo de mascotas internadas",
+        "precio": 18000.00,
+        "duracion_minutos": null,
+        "categoria_id": 1,
+        "categoria_nombre": "veterinaria",
+        "activo": true
+      },
+      {
+        "id": 10,
+        "nombre": "Desparasitación",
+        "descripcion": "Tratamiento completo de desparasitación",
+        "precio": 4500.00,
+        "duracion_minutos": 30,
+        "categoria_id": 1,
+        "categoria_nombre": "veterinaria",
+        "activo": true
+      },
+      {
+        "id": 11,
+        "nombre": "Limpieza dental",
+        "descripcion": "Limpieza dental profesional",
+        "precio": 8000.00,
+        "duracion_minutos": 60,
+        "categoria_id": 1,
+        "categoria_nombre": "veterinaria",
+        "activo": true
+      },
+      {
+        "id": 12,
+        "nombre": "Entrenamiento avanzado",
+        "descripcion": "Sesión de entrenamiento especializado",
+        "precio": 12000.00,
+        "duracion_minutos": 90,
+        "categoria_id": 2,
+        "categoria_nombre": "estética",
+        "activo": true
+      }
+    ],
+    "categorias_productos": [
+      { "id": 1, "nombre": "alimentos", "activo": true },
+      { "id": 2, "nombre": "accesorios", "activo": true },
+      { "id": 3, "nombre": "medicamentos", "activo": true },
+      { "id": 4, "nombre": "higiene", "activo": true },
+      { "id": 5, "nombre": "juguetes", "activo": true },
+      { "id": 6, "nombre": "farmacia", "activo": true },
+      { "id": 7, "nombre": "transporte", "activo": true }
+    ],
+    "categorias_servicios": [
+      { "id": 1, "nombre": "veterinaria", "descripcion": "servicios de atención médica y cuidados veterinarios", "activo": true },
+      { "id": 2, "nombre": "estética", "descripcion": "servicios de baño, corte y spa para mascotas", "activo": true },
+      { "id": 3, "nombre": "comercial", "descripcion": "venta de productos y accesorios", "activo": true },
+      { "id": 4, "nombre": "emergencias", "descripcion": "atención urgente o 24 horas para mascotas", "activo": true }
+    ],
+    "metadata": {
+      "total_productos": 18,
+      "total_servicios": 11,
+      "fecha_actualizacion": "2025-11-08T08:17:18.000"
+    }
+  }

@@ -1,0 +1,59 @@
+{
+  "reportPeriod": "Abril 2025",
+  "totals": {
+    "appointments": 186,
+    "emergencyAppointments": 24,
+    "telemedicineSessions": 42,
+    "newClients": 38,
+    "petHotelOccupancy": 68,
+    "vaccinesApplied": 122,
+    "surgeries": 18,
+    "groomingSessions": 75,
+    "revenue": 18452000,
+    "avgAppointmentValue": 15200,
+    "avgWaitTime": 12
+  },
+  "appointmentsByService": [
+    { "service": "Clínica general", "count": 68 },
+    { "service": "Rehabilitación", "count": 24 },
+    { "service": "Peluquería & Spa", "count": 56 },
+    { "service": "Telemedicina", "count": 42 }
+  ],
+  "revenueStreams": [
+    { "area": "Consultas", "amount": 6280000 },
+    { "area": "Cirugías", "amount": 3880000 },
+    { "area": "Farmacia", "amount": 3240000 },
+    { "area": "Wellness & Spa", "amount": 2620000 },
+    { "area": "Peluquería", "amount": 1412000 }
+  ],
+  "occupancyByBranch": [
+    { "branch": "Belgrano", "hospitalization": 78, "hotel": 74 },
+    { "branch": "Núñez", "hospitalization": 64, "hotel": 58 },
+    { "branch": "Saavedra", "hospitalization": 52, "hotel": 68 }
+  ],
+  "petHotelStats": {
+    "avgStay": 3.4,
+    "topBreeds": ["Caniche", "Golden Retriever", "Dálmata"],
+    "favoriteServices": ["Spa relajante", "Paseos premium", "Tele-reportes diarios"]
+  },
+  "alerts": [
+    {
+      "id": "alert-01",
+      "title": "Cobertura de guardia",
+      "message": "El equipo de emergencias superó el 80% de ocupación en Belgrano durante las noches de fin de semana.",
+      "severity": "high"
+    },
+    {
+      "id": "alert-02",
+      "title": "Satisfacción Spa",
+      "message": "El servicio de Peluquería Premium alcanzó 4.9⭐ de satisfacción en encuestas post servicio.",
+      "severity": "normal"
+    },
+    {
+      "id": "alert-03",
+      "title": "Vacunación preventiva",
+      "message": "Faltan completar refuerzos para el 12% de los pacientes crónicos registrados en Nuñez.",
+      "severity": "medium"
+    }
+  ]
+}
