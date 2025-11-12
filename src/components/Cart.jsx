@@ -161,26 +161,28 @@ const Cart = ({ isOpen, onClose }) => {
             <span>Total:</span>
             <span>${getTotalPrice().toLocaleString()}</span>
           </div>
-          <button
-            className="btn btn-secondary btn-full"
-            onClick={() => {
-              onClose();
-              navigate('/checkout');
-            }}
-          >
-            <i className="fa-solid fa-credit-card" style={{ marginRight: 8 }}></i>
-            Finalizar Compra
-          </button>
-          <button
-            className="btn btn-ghost btn-full"
-            onClick={() => {
-              onClose();
-              navigate('/productos');
-            }}
-          >
-            <i className="fa-solid fa-store" style={{ marginRight: 8 }}></i>
-            Continuar Comprando
-          </button>
+          <div className="checkout-actions">
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                onClose();
+                navigate('/productos');
+              }}
+            >
+              <i className="fa-solid fa-store" style={{ marginRight: 8 }}></i>
+              Continuar Comprando
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                onClose();
+                navigate('/checkout');
+              }}
+            >
+              <i className="fa-solid fa-credit-card" style={{ marginRight: 8 }}></i>
+              Finalizar Compra
+            </button>
+          </div>
         </div>
       </div>
     </div>

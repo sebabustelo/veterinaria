@@ -276,11 +276,7 @@
   background: rgba(61, 64, 125, 0.06);
 }
 
-.item-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
 
 .item-details {
   flex: 1;
@@ -318,8 +314,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0;
-  font-size: 0.95rem;
-  color: var(--text-muted, #62718a);
+  font-size: 0.9rem;
+  
 }
 
 .summary-row.total {
@@ -389,6 +385,7 @@
     align-items: flex-start;
     text-align: left;
   }
+  
 
   .orders-card__button {
     width: 100%;
@@ -406,10 +403,7 @@
     align-items: flex-start;
   }
 
-  .item-image {
-    width: 100%;
-    height: 180px;
-  }
+
 
   .item-total {
     align-self: flex-end;

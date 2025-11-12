@@ -20,14 +20,6 @@ const negocioCards = [
     to: "/admin/pedidos",
     label: "Ver ventas",
   },
-  {
-    icon: "fa-solid fa-calendar-check",
-    title: "Turnos",
-    description: "Agenda de turnos asignando y controlando turnos clínicos.",
-    to: "/admin/turnos",
-    label: "Ver turnos",
-  },
-  
 ];
 
 const operativaCards = [
@@ -61,10 +53,33 @@ const operativaCards = [
   },*/
 ];
 
+const mascotasCards = [
+  {
+    icon: "fa-solid fa-calendar-check",
+    title: "Turnos",
+    description: "Agenda de turnos asignando y controlando turnos clínicos.",
+    to: "/admin/turnos",
+    label: "Ver turnos",
+  },
+  {
+    icon: "fa-solid fa-notes-medical",
+    title: "Historias clínicas",
+    description: "Accedé al historial médico de cada paciente y registrá nuevas atenciones.",
+    to: "/admin/historias-clinicas",
+    label: "Ver historias clínicas",
+  },
+];
+
 const Admin = () => {
-  const [openGroup, setOpenGroup] = useState({ negocio: true, operativa: true });
+  const [openGroup, setOpenGroup] = useState({ mascotas: true, negocio: true, operativa: true });
 
   const sections = [
+    {
+      key: "mascotas",
+      title: "Gestión de mascotas",
+      description: "Organizá la agenda clínica y mantené las historias médicas actualizadas para cada paciente.",
+      cards: mascotasCards,
+    },
     {
       key: "negocio",
       title: "Gestión de negocio",
