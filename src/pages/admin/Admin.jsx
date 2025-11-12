@@ -8,7 +8,7 @@ import HeaderAdmin from "../../components/estaticos/HeaderAdmin";
 const negocioCards = [
   {
     icon: "fa-solid fa-box",
-    title: "Productos y Servicio",
+    title: "Productos y Servicios",
     description: "Administrá el catálogo, stock y promociones de la boutique.",
     to: "/admin/productos",
     label: "Ir a productos",
