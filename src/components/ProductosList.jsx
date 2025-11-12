@@ -9,7 +9,7 @@ const ProductList = ({ detalleProducto = 1, productos, setShowLoading }) => {
     const productosAMostrar = productos || todosProductos;
 
     return (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+        <div className="products-grid">
             {productosAMostrar.map(producto => (
                 <Productos
                     key={producto.id}
