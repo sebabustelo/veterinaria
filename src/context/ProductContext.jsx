@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, useMemo } from 'react';
 const DEFAULT_PRODUCTS = [
     {
         id: 1,
-        nombre: 'Alimento perro adulto',
+        nombre: 'Alimento perro adulto, bolsa de 15 kg',
         descripcion: 'Bolsa de 15 kg desarrollada junto a veterinarios para perros adultos.',
         categoria: 'Alimentos',
         precio: 25000,
@@ -12,7 +12,7 @@ const DEFAULT_PRODUCTS = [
     },
     {
         id: 2,
-        nombre: 'Alimento gato adulto',
+        nombre: 'Alimento gato adulto, bolsa de 10 kg',
         descripcion: 'Alimento balanceado para gatos adultos, bolsa de 10 kg.',
         categoria: 'Alimentos',
         precio: 18000,
@@ -21,7 +21,7 @@ const DEFAULT_PRODUCTS = [
     },
     {
         id: 3,
-        nombre: 'Pipeta antipulgas',
+        nombre: 'Pipeta antipulgas, duración 30 días',
         descripcion: 'Pipeta para perros medianos con protección por 30 días.',
         categoria: 'Farmacia',
         precio: 5000,
@@ -48,7 +48,7 @@ const DEFAULT_PRODUCTS = [
     },
     {
         id: 6,
-        nombre: 'Juguete interactivo',
+        nombre: 'Juguete interactivo con dispensador',
         descripcion: 'Juguete interactivo que estimula el olfato y libera alimento.',
         categoria: 'Juguetes',
         precio: 4500,
@@ -66,7 +66,7 @@ const DEFAULT_PRODUCTS = [
     },
     {
         id: 8,
-        nombre: 'Desparasitante interno',
+        nombre: 'Desparasitante interno, duración 30 días',
         descripcion: 'Tabletas palatables para desparasitación interna periódica.',
         categoria: 'Farmacia',
         precio: 3500,

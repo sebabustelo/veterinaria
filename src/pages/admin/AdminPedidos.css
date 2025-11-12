@@ -90,7 +90,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.85rem 1.2rem;
+  
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(124, 124, 181, 0.16);

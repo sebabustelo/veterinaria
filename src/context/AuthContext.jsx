@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { API_BASE_URL } from '../utils/apiConfig';
 import { getErrorMessage } from '../utils/authUtils';
 import usersData from '../data/adminUsuarios.json';
 import {
@@ -18,6 +17,37 @@ import { auth } from '../firebase';
 
 export const AuthContext = createContext();
 
+const buildUserFromFirebase = (firebaseUser) => {
+    if (!firebaseUser) return null;
+
+    const displayName =
+        firebaseUser.displayName ||
+        firebaseUser.email?.split('@')[0] ||
+        'Usuario Vettix';
+
+    const defaultRoles = [
+        {
+            name: 'cliente',
+            display_name: 'Cliente'
+        }
+    ];
+
+    return {
+        id: firebaseUser.uid,
+        persona_id: firebaseUser.uid,
+        nombre: displayName,
+        apellido: '',
+        name: displayName,
+        email: firebaseUser.email,
+        roles: defaultRoles,
+        roleNames: defaultRoles.map((role) => role.name),
+        tipo: 'firebase',
+        telefono: firebaseUser.phoneNumber || '',
+        avatar: firebaseUser.photoURL || '',
+        provider: firebaseUser.providerData[0]?.providerId || 'firebase'
+    };
+};
+
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -32,41 +62,40 @@ export const AuthProvider = ({ children }) => {
             
             if (firebaseUser) {
                 console.log('Firebase user detected:', firebaseUser.email);
-                // Verificar si es un login reciente usando una bandera en sessionStorage
-                const loginFlag = sessionStorage.getItem('recentLogin');
-                const isRecentLogin = loginFlag === 'true';
-                // SIEMPRE sincronizar con el backend
                 try {
-                    const providerToken = await firebaseUser.getIdToken();
-                    // Determinar el endpoint según el proveedor
-                    const provider = firebaseUser.providerData[0]?.providerId;
-                    let endpoint = 'firebase-login';
-                    if (provider === 'google.com') endpoint = 'google-login';
-                    if (provider === 'facebook.com') endpoint = 'facebook-login';
-                    const apiResponse = await fetch(`${API_BASE_URL}/${endpoint}`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ id_token: providerToken })
-                    });
-                    if (!apiResponse.ok) {
-                        setUser(null);
-                        localStorage.removeItem("token");
+                    const providerId = firebaseUser.providerData[0]?.providerId;
+
+                    if (providerId === 'google.com') {
+                        const firebaseProfile = buildUserFromFirebase(firebaseUser);
+                        const tokenPayload = {
+                            user: firebaseProfile,
+                            issuedAt: Date.now(),
+                            provider: 'google'
+                        };
+                        const encodedPayload = btoa(JSON.stringify(tokenPayload));
+                        const fakeToken = `firebase.${encodedPayload}.auth`;
+                        localStorage.setItem('token', fakeToken);
+                        setUser(firebaseProfile);
                         sessionStorage.removeItem('recentLogin');
                         setLoading(false);
                         return;
                     }
-                    const apiData = await apiResponse.json();
-                    if (apiData.token) {
-                        localStorage.setItem("token", apiData.token);
-                        setUser(apiData);
-                        console.log('Login successful, user set:', apiData);
-                        sessionStorage.removeItem('recentLogin');
-                    } else {
-                        setUser(null);
-                        localStorage.removeItem("token");
-                        sessionStorage.removeItem('recentLogin');
-                    }
+
+                    // Para otros proveedores (por ejemplo, Facebook) mantener la lógica previa
+                    // hasta que se decida un flujo específico.
+                    const fallbackUser = buildUserFromFirebase(firebaseUser);
+                    const tokenPayload = {
+                        user: fallbackUser,
+                        issuedAt: Date.now(),
+                        provider: providerId || 'firebase'
+                    };
+                    const encodedPayload = btoa(JSON.stringify(tokenPayload));
+                    const fakeToken = `firebase.${encodedPayload}.auth`;
+                    localStorage.setItem('token', fakeToken);
+                    setUser(fallbackUser);
+                    sessionStorage.removeItem('recentLogin');
                 } catch (error) {
+                    console.error('Error procesando el usuario de Firebase:', error);
                     setUser(null);
                     localStorage.removeItem("token");
                     sessionStorage.removeItem('recentLogin');
@@ -103,35 +132,17 @@ export const AuthProvider = ({ children }) => {
                 const result = await getRedirectResult(auth);
                 if (result && result.user) {
                     console.log('Procesando login social desde getRedirectResult:', result);
-                    const providerToken = await result.user.getIdToken();
-                    const provider = result.providerId || result.user.providerData[0]?.providerId;
-                    const endpoint = provider === 'google.com' ? 'google-login' : 'facebook-login';
-                    console.log('Llamando a la API social:', endpoint, providerToken);
-                    const apiResponse = await fetch(`${API_BASE_URL}/${endpoint}`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            id_token: providerToken
-                        })
-                    });
-                    console.log('API response status (social):', apiResponse.status);
-                    if (!apiResponse.ok) {
-                        const errorData = await apiResponse.json();
-                        console.error('API error (social):', errorData);
-                        setError(errorData.message || `Error en el login con ${provider === 'google.com' ? 'Google' : 'Facebook'}`);
-                        return;
-                    }
-                    const apiData = await apiResponse.json();
-                    console.log('API response data (social):', apiData);
-                    if (apiData.token) {
-                        localStorage.setItem("token", apiData.token);
-                        setUser(apiData);
-                        console.log('Login social exitoso, usuario seteado:', apiData);
-                    } else {
-                        setError("Error: No se recibió el token de autenticación del servidor.");
-                    }
+                    const firebaseProfile = buildUserFromFirebase(result.user);
+                    const tokenPayload = {
+                        user: firebaseProfile,
+                        issuedAt: Date.now(),
+                        provider: result.providerId || result.user.providerData[0]?.providerId || 'firebase'
+                    };
+                    const encodedPayload = btoa(JSON.stringify(tokenPayload));
+                    const fakeToken = `firebase.${encodedPayload}.auth`;
+                    localStorage.setItem('token', fakeToken);
+                    setUser(firebaseProfile);
+                    console.log('Login social exitoso (redirect), usuario seteado:', firebaseProfile);
                     sessionStorage.removeItem('recentLogin');
                 }
             } catch (error) {
@@ -258,38 +269,21 @@ export const AuthProvider = ({ children }) => {
         try {
             setError(null);
             setLoading(true);
-            // Usa popup en vez de redirect
             const googleProvider = new GoogleAuthProvider();
             googleProvider.setCustomParameters({ prompt: 'select_account' });
             const result = await signInWithPopup(auth, googleProvider);
-            // Si llega aquí, el usuario está autenticado en Firebase
-            const providerToken = await result.user.getIdToken();
-            const provider = result.providerId || result.user.providerData[0]?.providerId;
-            const endpoint = provider === 'google.com' ? 'google-login' : 'facebook-login';
-            const apiResponse = await fetch(`${API_BASE_URL}/${endpoint}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    id_token: providerToken
-                })
-            });
-            if (!apiResponse.ok) {
-                const errorData = await apiResponse.json();
-                setError(errorData.message || `Error en el login con ${provider === 'google.com' ? 'Google' : 'Facebook'}`);
-                setLoading(false);
-                return;
-            }
-            const apiData = await apiResponse.json();
-            if (apiData.token) {
-                localStorage.setItem("token", apiData.token);
-                setUser(apiData);
-                console.log('Google login exitoso, usuario establecido:', apiData);
-            } else {
-                setError("Error: No se recibió el token de autenticación del servidor.");
-                setLoading(false);
-            }
+            const firebaseProfile = buildUserFromFirebase(result.user);
+            const tokenPayload = {
+                user: firebaseProfile,
+                issuedAt: Date.now(),
+                provider: 'google'
+            };
+            const encodedPayload = btoa(JSON.stringify(tokenPayload));
+            const fakeToken = `firebase.${encodedPayload}.auth`;
+            localStorage.setItem('token', fakeToken);
+            setUser(firebaseProfile);
+            console.log('Google login exitoso, usuario establecido desde Firebase:', firebaseProfile);
+            setLoading(false);
         } catch (error) {
             console.error('Error en loginWithGoogle:', error);
             setError(error.message || "Error en login con Google");

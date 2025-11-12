@@ -789,6 +789,10 @@ h1, h2, h3, h4 {
   box-shadow: 0 12px 24px rgba(61, 64, 125, 0.08);
 }
 
+.loading-img {
+  filter: brightness(0) saturate(100%) invert(44%) sepia(9%) saturate(1298%) hue-rotate(212deg) brightness(94%) contrast(91%);
+}
+
 .loading-text,
 .no-results h3 {
   color: var(--secondary);

@@ -90,13 +90,13 @@ const Header = () => {
                             </li>
                         )}
 
-                        {user && (
-                            <li className="nav-item">
-                                <Link to="/mis-mascotas" className='nav-link' onClick={handleClose}>
-                                    <i className="fa-solid fa-paw"></i> Mis Mascotas
-                                </Link>
-                            </li>
-                        )}
+
+
+                        <li className="nav-item">
+                            <Link to="/acercade" className='nav-link' onClick={handleClose}>
+                                <i className="fa-solid fa-address-card"></i> Nosotros
+                            </Link>
+                        </li>
 
 
 
@@ -146,11 +146,7 @@ const Header = () => {
                                         <i className="fa-solid fa-shopping-bag"></i> Mis Pedidos
                                     </Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link to="/acercade" className='nav-link' onClick={handleClose}>
-                                        <i className="fa-solid fa-address-card"></i> Nosotros
-                                    </Link>
-                                </li>
+
                                 <li className="nav-item mobile-user-menu">
                                     <Link to="/" className='nav-link' onClick={() => {
                                         logout();
@@ -162,11 +158,7 @@ const Header = () => {
                             </>
                         ) : (
                             <>
-                                <li className="nav-item">
-                                    <Link to="/acercade" className='nav-link' onClick={handleClose}>
-                                        <i className="fa-solid fa-address-card"></i> Nosotros
-                                    </Link>
-                                </li>
+
                                 <li className="nav-item mobile-user-menu">
                                     <Link to="/login" className='nav-link' onClick={handleClose}>
                                         <i className="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
