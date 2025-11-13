@@ -1,0 +1,54 @@
+.pwa-install-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #3d407d 0%, #65ccec 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(61, 64, 125, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  animation: slideInUp 0.5s ease;
+}
+
+.pwa-install-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(61, 64, 125, 0.4);
+}
+
+.pwa-install-button:active {
+  transform: translateY(0);
+}
+
+.pwa-install-button i {
+  font-size: 1.1rem;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .pwa-install-button {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
+
