@@ -28,6 +28,7 @@ const AdminEstadisticas = lazy(() => import('@/pages/admin/AdminEstadisticas'))
 const AdminSucursales = lazy(() => import('@/pages/admin/AdminSucursales'))
 import ToastContainer from '@/components/ToastContainer'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import PWAInstallButton from '@/components/PWAInstallButton'
 import './index.css'
 
 const queryClient = new QueryClient()
@@ -151,6 +152,7 @@ function AppRoutes() {
         } />
       </Routes>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
+      <PWAInstallButton />
     </>
   )
 }
