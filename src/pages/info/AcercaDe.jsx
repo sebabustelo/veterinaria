@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/estaticos/Header";
 import Footer from "../../components/estaticos/Footer";
 import "./styleContactos.css";
@@ -71,6 +71,18 @@ const capacidades = [
 const AcercaDe = () => {
   const [form, setForm] = useState({ nombre: "", email: "", mensaje: "" });
   const [enviado, setEnviado] = useState(false);
+
+  useEffect(() => {
+    // Si hay un hash en la URL, hacer scroll al elemento
+    if (window.location.hash === '#contact-form') {
+      setTimeout(() => {
+        const element = document.getElementById('contact-form');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -175,7 +187,7 @@ const AcercaDe = () => {
             </div>
           </div>
 
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <form id="contact-form" className="contact-form" onSubmit={handleSubmit}>
             <input
               type="text"
               name="nombre"

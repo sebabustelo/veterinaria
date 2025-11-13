@@ -578,7 +578,7 @@ ${mascotaActiva.name} tiene turno con ${proveedorActivo.nombre} el ${fecha} a la
       <main className="main-content">
         <section className="admin-hero">
           <div>
-            <span className="hero-tag">Agenda tu experiencia Vettix</span>
+            <span className="hero-tag">Agenda de turnos</span>
             <h1>Solicitar turno</h1>
             <p>
               Elegí el profesional o servicio que necesitás, consultá las disponibilidades en el calendario y reservá tu turno en cuestión de segundos. Nuestro equipo confirmará la cita por el canal que prefieras.
@@ -588,7 +588,7 @@ ${mascotaActiva.name} tiene turno con ${proveedorActivo.nombre} el ${fecha} a la
       
         <section className="selection-panel" style={{marginTop: "2rem"}}>
           <header className="selection-header">
-            <h2>Elegí la sucursal Vettix</h2>
+            <h2>Elegí la sucursal</h2>
             <p>
               Seleccioná la clínica donde querés atenderte. Te mostraremos únicamente los
               profesionales y servicios disponibles en esa ubicación.

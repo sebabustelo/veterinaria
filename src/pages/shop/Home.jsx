@@ -93,7 +93,7 @@ const Home = () => {
                         </div>
                         <div className="hero-cta">
                             <Link to="/turnos" className="btn primary">Solicitar turno</Link>
-                            <Link to="/acercade" className="btn primary">Contactar equipo</Link>
+                            <Link to="/acercade#contact-form" className="btn primary">Contactar equipo</Link>
                         </div>
                     </div>
                     <div className="hero-media">
