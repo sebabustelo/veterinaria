@@ -73,7 +73,7 @@ const Home = () => {
             <Header />
 
             <main className="main-content">
-                <section className="hero-section vet-hero turnos-hero ">
+                <section className="admin-hero">
                     <div className="hero-content">
                         <span className="hero-tag">Clínica Veterinaria Integral</span>
                         <h1 className="hero-title">

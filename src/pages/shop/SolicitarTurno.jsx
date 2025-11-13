@@ -4,6 +4,8 @@ import Header from "../../components/estaticos/Header";
 import Footer from "../../components/estaticos/Footer";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/context/ToastContext";
+import '../admin/AdminProductos.css';
+import '../admin/Admin.css';
 
 const sucursales = [
   {
@@ -566,8 +568,8 @@ const SolicitarTurno = () => {
         />
       </Helmet>
       <Header />
-      <main className="main-content turno-page">
-        <section className="turnos-hero">
+      <main className="main-content">
+        <section className="admin-hero">
           <div>
             <span className="hero-tag">Agenda tu experiencia Vettix</span>
             <h1>Solicitar turno</h1>

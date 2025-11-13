@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '@/components/estaticos/HeaderAdmin';
 import Footer from '@/components/estaticos/Footer';
 import demoClients from '@/data/demoClients.json';
@@ -232,6 +233,7 @@ const savePetsToStorage = (user, pets) => {
 };
 
 const AdminTurnos = () => {
+  const navigate = useNavigate();
   const { showError, showSuccess } = useToast();
 
   const demoUsers = useMemo(
@@ -240,9 +242,9 @@ const AdminTurnos = () => {
         const id = client.id ?? client.email ?? `demo-client-${index}`;
         const pets = Array.isArray(client.pets)
           ? client.pets.map((pet, petIndex) => ({
-              ...pet,
-              id: pet.id ?? `${id}-pet-${petIndex}`,
-            }))
+            ...pet,
+            id: pet.id ?? `${id}-pet-${petIndex}`,
+          }))
           : [];
         return {
           ...client,
@@ -343,7 +345,7 @@ const AdminTurnos = () => {
       { id: '02', userIndex: 1, sucursalId: 3, providerType: 'vet', providerId: 'vet-lucia', fechaISO: '2025-10-02', hora: '10:30', modalidad: 'programado', estado: 'confirmado', petIndex: 1 },
       { id: '03', userIndex: 2, sucursalId: 4, providerType: 'vet', providerId: 'vet-martin', fechaISO: '2025-10-03', hora: '15:00', modalidad: 'emergencia', estado: 'pendiente' },
       { id: '04', userIndex: 3, sucursalId: 2, providerType: 'servicio', providerId: 'serv-entren-1', fechaISO: '2025-10-04', hora: '11:00', modalidad: 'atencion_directa', estado: 'confirmado' },
-      { id: '05', userIndex: 4, sucursalId: 5, providerType: 'servicio', providerId: 'serv-paseo-1', fechaISO: '2025-10-05', hora: '12:30', modalidad: 'programado', estado: 'completado' },      
+      { id: '05', userIndex: 4, sucursalId: 5, providerType: 'servicio', providerId: 'serv-paseo-1', fechaISO: '2025-10-05', hora: '12:30', modalidad: 'programado', estado: 'completado' },
       { id: '11', userIndex: 0, sucursalId: 1, providerType: 'vet', providerId: 'vet-ana', fechaISO: '2025-10-11', hora: '12:00', modalidad: 'programado', estado: 'confirmado', petIndex: 0 },
     ];
 
@@ -706,7 +708,7 @@ const AdminTurnos = () => {
       </Helmet>
       <HeaderAdmin />
       <main className="main-content turno-page">
-        <section className="turnos-hero admin-orders-hero">
+        <section className="admin-hero">
           <div>
             <span className="hero-tag hero-tag-contrast">Administrar Turnos</span>
             <h1>Agenda clínica y servicios</h1>
@@ -726,7 +728,16 @@ const AdminTurnos = () => {
             </ul>
           </div>
         </section>
-
+        <div className="admin-actions-bar">         
+          <button
+            type="button"
+            className="admin-card-link"
+            onClick={() => navigate('/admin')}
+          >
+            <i className="fa-solid fa-arrow-left"></i>
+            Volver al Admin
+          </button>
+        </div>
         <section className="selection-panel">
           <header className="selection-header">
             <h2>Seleccioná el tipo de turno</h2>
@@ -1271,13 +1282,13 @@ const AdminTurnos = () => {
               <div className="provider-tags">
                 {turnoTipo === 'veterinario'
                   ? proveedorActivo.especialidades.map((esp) => (
-                      <span key={esp} className="provider-tag">
-                        {esp}
-                      </span>
-                    ))
+                    <span key={esp} className="provider-tag">
+                      {esp}
+                    </span>
+                  ))
                   : (
-                      <span className="provider-tag">{proveedorActivo.rol}</span>
-                    )}
+                    <span className="provider-tag">{proveedorActivo.rol}</span>
+                  )}
               </div>
               <p className="provider-days">
                 Atiende los {proveedorActivo.dias.map((day) => diasSemana[day]).join(', ')}

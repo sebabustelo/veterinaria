@@ -16,6 +16,7 @@ const AdminProductos = lazy(() => import('@/pages/admin/AdminProductos'))
 const AdminApis = lazy(() => import('@/pages/admin/AdminApis'))
 const AdminRoles = lazy(() => import('@/pages/admin/AdminRoles'))
 const AdminTurnos = lazy(() => import('@/pages/admin/AdminTurnos'))
+const AdminHistoriasClinicas = lazy(() => import('@/pages/admin/AdminHistoriasClinicas'))
 import Checkout from '@/pages/shop/Checkout'
 import MyOrders from '@/pages/shop/MyOrders'
 import MyPets from '@/pages/shop/MyPets'
@@ -24,6 +25,7 @@ import { ProductProvider, CartProvider, AuthProvider, useAuth, UserProvider, Use
 import ResetPassword from '@/components/ResetPassword'
 const AdminPedidos = lazy(() => import('@/pages/admin/AdminPedidos'))
 const AdminEstadisticas = lazy(() => import('@/pages/admin/AdminEstadisticas'))
+const AdminSucursales = lazy(() => import('@/pages/admin/AdminSucursales'))
 import ToastContainer from '@/components/ToastContainer'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import './index.css'
@@ -122,6 +124,18 @@ function AppRoutes() {
         <Route path='/admin/estadisticas' element={
           <RutasProtegidas isAuthenticated={!!user} roles={['admin']}>
             <AdminEstadisticas />
+          </RutasProtegidas>
+        } />
+        <Route path='/admin/sucursales' element={
+          <RutasProtegidas isAuthenticated={!!user} roles={['admin']}>
+            <AdminSucursales />
+          </RutasProtegidas>
+        } />
+        <Route path='/admin/historias-clinicas' element={
+          <RutasProtegidas isAuthenticated={!!user} roles={['admin']}>
+            <UsersProvider>
+              <AdminHistoriasClinicas />
+            </UsersProvider>
           </RutasProtegidas>
         } />
 

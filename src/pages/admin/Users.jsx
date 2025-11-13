@@ -5,6 +5,7 @@ import HeaderAdmin from '../../components/estaticos/HeaderAdmin';
 import Footer from '../../components/estaticos/Footer';
 import adminUsuariosData from '@/data/adminUsuarios.json';
 import './AdminUsuarios.css';
+import './Admin.css';
 
 const formatRoles = (roles) =>
   Array.isArray(roles) && roles.length > 0 ? roles.join(' · ') : 'Sin roles asignados';
@@ -21,8 +22,8 @@ const normalizarPersona = (persona) => {
   const servicios = Array.isArray(servicioTiposRaw)
     ? servicioTiposRaw
     : servicioTiposRaw
-    ? [servicioTiposRaw]
-    : [];
+      ? [servicioTiposRaw]
+      : [];
   const mascotas = Array.isArray(persona.mascotas) ? persona.mascotas : [];
   const rolesSistema = Array.isArray(persona.rolesSistema) ? persona.rolesSistema : [];
   return {
@@ -395,13 +396,13 @@ const AdminUsuarios = () => {
           content="Panel administrativo para consultar clientes, veterinarios y personal del ecosistema Vettix." />
       </Helmet>
       <HeaderAdmin />
-      <main className="main-content admin-users">
-        <section className="turnos-hero admin-orders-hero">
+      <main className="main-content">
+        <section className="admin-hero">
           <div>
             <span className="hero-tag hero-tag-contrast">Administrar Usuarios</span>
-            <h1>Clientes, veterinarios y personal</h1>
+            <h1>Clientes, veterinarios y personal de servicios</h1>
             <p>
-              Explorá la base consolidada de personas y roles asociados al sistema. 
+              Explorá la base consolidada de personas y roles asociados al sistema.
             </p>
           </div>
           <div className="admin-users-hero-card">
@@ -456,20 +457,25 @@ const AdminUsuarios = () => {
               </button>
             )}
           </div>
-          
-          <div className="users-actions">
+          <div className='admin-actions-bar'>
             <button
               type="button"
-              className="btn btn-primary users-new-button"
+              className="admin-card-link"
               onClick={() => setIsModalOpen(true)}
             >
               <i className="fa-solid fa-user-plus"></i> Nuevo usuario
             </button>
-            <Link to="/admin" className="btn btn-primary users-back-button">
+            <button
+              type="button"
+              className="admin-card-link"
+              onClick={() => navigate('/admin')}
+            >
               <i className="fa-solid fa-arrow-left"></i>
-              Volver al admin
-            </Link>
+              Volver al Admin
+            </button>
           </div>
+
+
         </section>
 
         <section className="users-table-wrapper">
@@ -969,8 +975,8 @@ const AdminUsuarios = () => {
                                   {pet.sex === 'female'
                                     ? 'Hembra'
                                     : pet.sex === 'male'
-                                    ? 'Macho'
-                                    : 'Sin definir'}
+                                      ? 'Macho'
+                                      : 'Sin definir'}
                                 </span>
                               )}
                               {pet.age !== '' && pet.age !== null && (
@@ -1026,12 +1032,12 @@ const AdminUsuarios = () => {
                 </section>
               )}
 
-              <footer className="users-modal__footer">
-                <button type="button" className="btn btn-secondary" onClick={closeModal}>
+              <footer className="users-modal__footer admin-actions-bar">
+                <button type="button" className="admin-card-link" onClick={closeModal}>
                   Cancelar
                 </button>
-                <button type="submit" className="btn btn-primary">
-                  Guardar 
+                <button type="submit" className="admin-card-link">
+                  Guardar
                 </button>
               </footer>
             </form>

@@ -24,6 +24,13 @@ const negocioCards = [
 
 const operativaCards = [
   {
+    icon: "fa-solid fa-store",
+    title: "Sucursales",
+    description: "Administrá las sedes, sus horarios de atención y los profesionales disponibles en cada una.",
+    to: "/admin/sucursales",
+    label: "Ver sucursales",
+  },
+  {
     icon: "fa-solid fa-users",
     title: "Usuarios",
     description: "Gestioná clientes, equipos internos y su información de contacto.",
@@ -37,14 +44,14 @@ const operativaCards = [
     to: "/admin/estadisticas",
     label: "Ver estadísticas",
   },
- /* {
-    icon: "fa-solid fa-user-tag",
-    title: "Roles",
-    description: "Definí permisos y accesos específicos para cada rol de la organización.",
-    to: "/admin/roles",
-    label: "Ver roles",
-  },
   {
+    icon: "fa-solid fa-user-shield",
+    title: "Permisos y Roles",
+    description: "Definí accesos específicos para cada área y asegurá un control adecuado de la información.",
+    to: "/admin/roles",
+    label: "Gestionar roles",
+  },
+ /* {
     icon: "fa-solid fa-code",
     title: "Gestión de APIs",
     description: "Controlá los endpoints disponibles y sus credenciales de acceso.",
@@ -104,13 +111,15 @@ const Admin = () => {
         />
       </Helmet>
       <HeaderAdmin />
-      <main className="main-content admin-main">
-      <section className="turnos-hero admin-stats-hero">
+      <main className="main-content">
+      <section className="admin-hero">
           <div className="boutique-hero-header">
             <span className="hero-tag hero-tag-contrast">Panel administrativo</span>
-            <h1>Gestion administrativa</h1>
+            <h1>Gestión Administrativa</h1>
             <p>
-              Controlá catálogos, turnos, ventas y equipos con una interfaz unificada.
+              Administrá todos los aspectos de tu clínica veterinaria desde un único panel centralizado. 
+              Gestioná productos, servicios, turnos, ventas, usuarios y configuraciones con herramientas 
+              intuitivas diseñadas para optimizar tu operación diaria.
             </p>
           </div>
          

@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../components/estaticos/HeaderAdmin';
 import Footer from '../../components/estaticos/Footer';
 import adminProductsData from '@/data/adminProducts.json';
 import './AdminProductos.css';
+import './Admin.css';
 
 const formatCurrency = (value) =>
   value?.toLocaleString('es-AR', {
@@ -22,6 +23,7 @@ const formatDuration = (minutes) => {
 };
 
 const AdminProductos = () => {
+  const navigate = useNavigate();
   const productos = adminProductsData.productos ?? [];
   const servicios = adminProductsData.servicios ?? [];
   const metadata = adminProductsData.metadata ?? {};
@@ -98,7 +100,7 @@ const AdminProductos = () => {
       </Helmet>
       <HeaderAdmin />
       <main className="main-content admin-products">
-        <section className="turnos-hero admin-orders-hero">
+        <section className="admin-hero">
           <div>
             <span className="hero-tag hero-tag-contrast">Administrar Catálogo</span>
             <h1>Productos y servicios </h1>
@@ -108,44 +110,20 @@ const AdminProductos = () => {
             </p>
           </div>
           <div className="admin-products-hero-card">
-            <ul>
-              <li>Total de productos: {resumen.totalProductos}</li>
-              <li>Total de servicios: {resumen.totalServicios}</li>
-              <li>Stock consolidado: {resumen.stockTotal} unidades</li>
-              <li>Inventario valuado: {formatCurrency(resumen.valorInventario)}</li>
+            <ul>              
+              <li>Servicios disponibles: {resumen.totalServicios} procedimientos y atención especializada</li>
+              <li>Stock total: {resumen.stockTotal} unidades listas para la venta</li>
+              <li>Valor estimado: {formatCurrency(resumen.valorInventario)} inventario ponderado a precio de lista</li>
             </ul>
           </div>
-        </section>
-
-        <section className="products-summary-grid">
-          <article className="products-summary-card">
-            <h3>Inventario vigente</h3>
-            <p className="summary-value">{resumen.totalProductos}</p>
-            <span className="summary-sub">Referencias activas en catálogo</span>
-          </article>
-          <article className="products-summary-card">
-            <h3>Servicios disponibles</h3>
-            <p className="summary-value">{resumen.totalServicios}</p>
-            <span className="summary-sub">Procedimientos y atención especializada</span>
-          </article>
-          <article className="products-summary-card">
-            <h3>Stock total</h3>
-            <p className="summary-value">{resumen.stockTotal}</p>
-            <span className="summary-sub">Unidades listas para la venta</span>
-          </article>
-          <article className="products-summary-card">
-            <h3>Valor estimado</h3>
-            <p className="summary-value">{formatCurrency(resumen.valorInventario)}</p>
-            <span className="summary-sub">Inventario ponderado a precio de lista</span>
-          </article>
         </section>
 
         <section className="products-toolbar">
           <div className="search-box">
             <i className="fa-solid fa-search search-icon"></i>
-            <input
+            <input id='search-products'
               type="text"
-              placeholder="   Buscar por nombre, descripción o categoría..."
+              placeholder="Buscar por nombre, descripción o categoría..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
             />
@@ -155,7 +133,8 @@ const AdminProductos = () => {
               </button>
             )}
           </div>
-          <div className="products-tabs" role="tablist">
+        
+          <div className="products-tabs " role="tablist">
             <button
               type="button"
               className={`products-tab ${activeTab === 'productos' ? 'active' : ''}`}
@@ -175,47 +154,25 @@ const AdminProductos = () => {
               Servicios
             </button>
           </div>
-          <Link to="/admin" className="admin-card-link">
-            <i className="fa-solid fa-arrow-left"></i>
-            Volver al Admin
-          </Link>
+          <div className='admin-actions-bar'>
+        
+            <button
+              type="button"
+              className="admin-card-link"
+              onClick={() => navigate('/admin')}
+            >
+              <i className="fa-solid fa-arrow-left"></i>
+              Volver al Admin
+            </button>
+          </div>
+
         </section>
 
-        <section className="products-filters">
-          {activeTab === 'productos' ? (
-            <label>
-              Categoría
-              <select
-                value={categoriaProducto}
-                onChange={(event) => setCategoriaProducto(event.target.value)}
-              >
-                {categoriasProductos.map((categoria) => (
-                  <option key={categoria} value={categoria}>
-                    {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ) : (
-            <label>
-              Categoría
-              <select
-                value={categoriaServicio}
-                onChange={(event) => setCategoriaServicio(event.target.value)}
-              >
-                {categoriasServicios.map((categoria) => (
-                  <option key={categoria} value={categoria}>
-                    {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-          <span className="filters-count">{activeCount} resultados</span>
-        </section>
+       
 
         {activeTab === 'productos' ? (
           <section className="products-table-wrapper">
+              <span className="filters-count">{activeCount} resultados</span><br /><br />
             {filteredProductos.length === 0 ? (
               <div className="products-empty">
                 <i className="fa-solid fa-box-open"></i>

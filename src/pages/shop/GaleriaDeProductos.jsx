@@ -8,7 +8,8 @@ import { ProductContext } from '@/context/ProductContext'
 import { useRealTime } from '@/context/RealTimeContext'
 import loading from '@/assets/loading.gif'
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import '../admin/AdminProductos.css';
+import '../admin/Admin.css';
 
 const highlights = [
   {
@@ -69,8 +70,8 @@ const GaleriaDeProductos = () => {
         </div>
       )}
       <main className="main-content">
-        <section className="turnos-hero boutique-hero">
-          <div className="boutique-hero-header">
+        <section className="admin-hero">
+          <div >
             <span className="hero-tag hero-tag-contrast">Vettix Boutique</span>
             <h1>Productos premium para el cuidado de tu mascota</h1>
             <p>
@@ -79,9 +80,8 @@ const GaleriaDeProductos = () => {
           
           </div>
 
-          <div className="boutique-hero-highlight">
-           
-            <ul className="boutique-hero-list">
+          <div className="admin-products-hero-card">           
+            <ul >
               <li>Reposiciones semanales con novedades</li>
               <li>Marcas premium y líneas clínicas certificadas</li>
               <li>Recomendaciones personalizadas según historial</li>

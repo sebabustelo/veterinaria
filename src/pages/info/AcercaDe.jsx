@@ -3,6 +3,8 @@ import Header from "../../components/estaticos/Header";
 import Footer from "../../components/estaticos/Footer";
 import "./styleContactos.css";
 import { Helmet } from 'react-helmet-async';
+import '../admin/AdminTurnos.css';
+import '../admin/Admin.css';
 
 const sucursales = [
   {
@@ -91,7 +93,7 @@ const AcercaDe = () => {
       </Helmet>
       <Header />
       <main className="main-content">
-      <section className="turnos-hero acerca-hero">
+      <section className="admin-hero">
           <div className="acerca-hero-header">
             <span className="hero-tag hero-tag-contrast">Sobre Vettix</span>
             <h1>Red veterinaria premium con cobertura integral</h1>
@@ -100,15 +102,9 @@ const AcercaDe = () => {
             </p>
           </div>
 
-          <div className="acerca-hero-highlight">
-            <div className="highlight-badge">
-              <span aria-hidden>⭐</span>
-              <div>
-                <strong>Clínica certificada</strong>
-                <p>Atención reconocida por asociaciones veterinarias</p>
-              </div>
-            </div>
-            <ul className="acerca-hero-list">
+          <div className="admin-products-hero-card">
+            
+            <ul >
               <li>Urgencias 24/7...</li>
               <li>Internación premium...</li>
               <li>Programas de bienestar...</li>
@@ -146,7 +142,7 @@ const AcercaDe = () => {
           </div>
         </section>
         <br />
-        <section id="contacto" className="turnos-hero">
+        <section id="contacto" className="admin-hero">
           <div className="contact-intro">
             <span className="hero-tag">Contacto directo</span>
             <h2>Coordinemos la próxima visita de tu mascota</h2>

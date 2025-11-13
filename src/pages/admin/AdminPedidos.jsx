@@ -75,19 +75,24 @@ const AdminPedidos = () => {
         />
       </Helmet>
       <HeaderAdmin />
-      <main className="main-content admin-orders">
-        <section className="turnos-hero admin-orders-hero">
+      <main className="main-content">
+        <section className="admin-hero">
           <div>
             <span className="hero-tag hero-tag-contrast">Resumen de ventas</span>
-          
-            <h1>
-              Productos y Servicios  
-            </h1>
+            <h1>Ventas y Pedidos</h1>
+            <p>
+              Consultá el historial completo de ventas, pedidos y transacciones de la clínica. 
+              Visualizá detalles de productos y servicios vendidos, ingresos generados y el 
+              desempeño comercial por sucursal y cliente.
+            </p>
           </div>
-          <div className="admin-orders-hero-card">
+          <div className="admin-products-hero-card">
             <ul>
               <li>Total ventas: {metadata.total_ventas ?? pedidos.length}</li>
-              <li>Ingresos: {formatCurrency(metadata.total_ingresos ?? resumen.totalIngresos)}</li>
+              <li>Ingresos totales: {formatCurrency(resumen.totalIngresos)}</li>              
+              <li>Servicios clínicos: {resumen.totalServicios} (Consultas, cirugías y wellness)</li>
+              <li>Productos boutique: {resumen.totalProductos} (Farmacia, alimentos y accesorios)</li>
+              <li>Pedidos registrados: {resumen.totalPedidos} operaciones históricas</li>
               <li>
                 Actualización: {metadata.fecha_actualizacion
                   ? new Date(metadata.fecha_actualizacion).toLocaleString("es-AR")
@@ -95,31 +100,6 @@ const AdminPedidos = () => {
               </li>
             </ul>
           </div>
-        </section>
-
-        <section className="orders-summary-grid">
-          <article className="orders-summary-card">
-            <h3>Ingresos totales</h3>
-            <p className="summary-value">{formatCurrency(resumen.totalIngresos)}</p>
-            <span className="summary-sub">
-              Ticket promedio: {formatCurrency(resumen.ticketPromedio)}
-            </span>
-          </article>
-          <article className="orders-summary-card">
-            <h3>Servicios clínicos</h3>
-            <p className="summary-value">{resumen.totalServicios}</p>
-            <span className="summary-sub">Consultas, cirugías y wellness</span>
-          </article>
-          <article className="orders-summary-card">
-            <h3>Productos boutique</h3>
-            <p className="summary-value">{resumen.totalProductos}</p>
-            <span className="summary-sub">Farmacia, alimentos y accesorios</span>
-          </article>
-          <article className="orders-summary-card">
-            <h3>Pedidos registrados</h3>
-            <p className="summary-value">{resumen.totalPedidos}</p>
-            <span className="summary-sub">Operaciones históricas</span>
-          </article>
         </section>
 
         <section className="orders-search">
