@@ -636,7 +636,7 @@ ${mascotaActiva.name} tiene turno con ${proveedorActivo.nombre} el ${fecha} a la
           )}
         </section>
 
-        <section className="selection-panel">
+        <section className="selection-panel" style={{marginTop: "2rem"}}>
           <header className="selection-header">
             <h2>Elegí la mascota</h2>
             <p>
