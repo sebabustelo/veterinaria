@@ -359,7 +359,7 @@ const AdminHistoriasClinicas = () => {
           </div>
         </section>
 
-        <div className="admin-actions-bar">
+        <div className="admin-actions-bar" style={{marginTop: "2rem"}}>
           <button
             type="button"
             className="admin-card-link"
@@ -370,7 +370,7 @@ const AdminHistoriasClinicas = () => {
           </button>
         </div>
 
-        <section className="selection-panel">
+        <section className="selection-panel" style={{marginTop: "2rem"}}>
           <header className="selection-header">
             <h2>Seleccioná el cliente</h2>
             <p>Elegí un cliente para ver las mascotas asociadas y acceder a sus historias clínicas.</p>
@@ -402,7 +402,7 @@ const AdminHistoriasClinicas = () => {
         </section>
 
         {selectedUser && (
-          <section className="selection-panel">
+          <section className="selection-panel" style={{marginTop: "2rem"}}>
             <header className="selection-header">
               <h2>Seleccioná la mascota</h2>
               <p>Elegí la mascota del cliente para visualizar su historia clínica completa.</p>

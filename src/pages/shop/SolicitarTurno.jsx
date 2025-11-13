@@ -508,12 +508,19 @@ const SolicitarTurno = () => {
       day: "numeric",
       month: "long",
     });
-    const resumen = `Turno para ${mascotaActiva.name} en ${sucursalActiva.nombre} con ${
-      proveedorActivo.nombre
-    } el ${fecha} a las ${horaSeleccionada}.`;
-    alert(
-      `${resumen}\nNos comunicaremos desde ${sucursalActiva.telefono} para confirmar la visita.`
-    );
+    
+    const userEmail = user?.email || "tu correo";
+    const mensaje = `¡Turno confirmado! 🎉
+
+${mascotaActiva.name} tiene turno con ${proveedorActivo.nombre} el ${fecha} a las ${horaSeleccionada} en ${sucursalActiva.nombre}.
+
+📧 Se envió un email de confirmación a ${userEmail} con todos los detalles del turno.
+
+📞 Nos comunicaremos desde ${sucursalActiva.telefono} para confirmar la visita.
+
+💡 Recordá traer la documentación de ${mascotaActiva.name} y llegar 10 minutos antes.`;
+    
+    showSuccess(mensaje, null); // null = no se cierra automáticamente, el usuario debe cerrarlo
   };
 
   const mostrarCalendario = Boolean(proveedorActivo);
@@ -579,7 +586,7 @@ const SolicitarTurno = () => {
           </div>
         </section>
       
-        <section className="selection-panel">
+        <section className="selection-panel" style={{marginTop: "2rem"}}>
           <header className="selection-header">
             <h2>Elegí la sucursal Vettix</h2>
             <p>
@@ -832,7 +839,7 @@ const SolicitarTurno = () => {
         </div>
 
         {turnoTipo === "veterinario" ? (
-          <section className="selection-panel">
+          <section className="selection-panel" style={{marginTop: "2rem"}}>
             <header className="selection-header">
               <h2>Agenda con un profesional veterinario</h2>
               <p>
@@ -930,7 +937,7 @@ const SolicitarTurno = () => {
             )}
           </section>
         ) : (
-          <section className="selection-panel">
+          <section className="selection-panel" style={{marginTop: "2rem"}}>
             <header className="selection-header">
               <h2>Reservá un servicio complementario</h2>
               <p>
@@ -1059,7 +1066,7 @@ const SolicitarTurno = () => {
         )}
 
         {proveedorActivo && fechaSeleccionada && horaSeleccionada && (
-          <section className="turno-summary">
+          <section className="turno-summary" style={{marginTop: "2rem"}}>
             <h2>Resumen del turno</h2>
             <ul>
               {mascotaActiva && (

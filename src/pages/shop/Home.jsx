@@ -24,7 +24,7 @@ const serviceCards = [
         description: "Tratamientos de spa, cortes profesionales y bienestar integral con productos hipoalergénicos de alta gama.",
         image: "/img/spa.jpg",
         cta: "Reservar servicio",
-        to: "/contactos"
+        to: "/turnos"
     }
 ];
 
@@ -74,9 +74,9 @@ const Home = () => {
 
             <main className="main-content">
                 <section className="admin-hero">
-                    <div className="hero-content">
+                    <div>
                         <span className="hero-tag">Clínica Veterinaria Integral</span>
-                        <h1 className="hero-title">
+                        <h1 >
                             Vettix, excelencia veterinaria en Belgrano, Núñez y Saavedra
                         </h1>
                         <p className="hero-subtitle">
