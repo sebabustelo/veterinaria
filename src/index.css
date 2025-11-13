@@ -202,7 +202,7 @@ h1, h2, h3, h4 {
 
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
 }
 
@@ -821,6 +821,12 @@ h1, h2, h3, h4 {
   }
 }
 
+@media (max-width: 1200px) {
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .main-content {
     padding: 2.2rem 1rem;
@@ -844,6 +850,11 @@ h1, h2, h3, h4 {
     margin-top: 2rem;
     width: 100%;
     justify-content: space-between;
+  }
+
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 }
 

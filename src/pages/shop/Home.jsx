@@ -25,6 +25,13 @@ const serviceCards = [
         image: "/img/spa.jpg",
         cta: "Reservar servicio",
         to: "/turnos"
+    },
+    {
+        title: "Teleconsulta",
+        description: "Consultas veterinarias a distancia con especialistas certificados. Próximamente disponible para seguimiento, consultas de rutina y segunda opinión desde la comodidad de tu hogar.",
+        image: "/img/teleconsulta.jpg",
+        cta: "Próximamente",
+        to: "#"
     }
 ];
 
@@ -94,6 +101,7 @@ const Home = () => {
                         <div className="hero-cta">
                             <Link to="/turnos" className="btn primary">Solicitar turno</Link>
                             <Link to="/acercade#contact-form" className="btn primary">Contactar equipo</Link>
+                            <Link to="/productos" className="btn primary">Ver pet shop </Link>
                         </div>
                     </div>
                     <div className="hero-media">
@@ -146,18 +154,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section className="cta-banner">
-                    <div className="cta-content">
-                        <h2>Agenda una visita o una teleconsulta</h2>
-                        <p>
-                            Nuestro equipo coordina turnos presenciales, visitas domiciliarias y teleconsultas en el momento. También podés conocer los planes de salud preventiva Vettix Care.
-                        </p>
-                    </div>
-                    <div className="cta-actions">
-                        <Link to="/turnos" className="btn primary">Reservar turno ahora</Link>
-                        <Link to="/productos" className="btn tertiary">Ver pet shop premium</Link>
-                    </div>
-                </section>
+               
             </main>
 
             <Footer />
