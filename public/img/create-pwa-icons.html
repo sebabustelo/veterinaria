@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Iconos PWA - Vettix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        canvas {
+            border: 2px solid #ddd;
+            margin: 10px;
+            display: block;
+        }
+        button {
+            background: #3d407d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #65ccec;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Iconos PWA Optimizados</h1>
+        <div class="info">
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Carga tu imagen de icono (debe tener la huella/paw print)</li>
+                <li>La herramienta creará versiones optimizadas con la huella más pequeña (75% del tamaño)</li>
+                <li>Descarga los iconos generados y guárdalos como icon-pwa-192.png e icon-pwa-512.png</li>
+            </ol>
+        </div>
+        
+        <input type="file" id="imageInput" accept="image/*">
+        <br><br>
+        
+        <div>
+            <h3>Icono 192x192 (con padding)</h3>
+            <canvas id="canvas192" width="192" height="192"></canvas>
+            <button onclick="downloadIcon(192)">Descargar 192x192</button>
+        </div>
+        
+        <div>
+            <h3>Icono 512x512 (con padding)</h3>
+            <canvas id="canvas512" width="512" height="512"></canvas>
+            <button onclick="downloadIcon(512)">Descargar 512x512</button>
+        </div>
+    </div>
+
+    <script>
+        let originalImage = null;
+
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        originalImage = img;
+                        createOptimizedIcons();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function createOptimizedIcons() {
+            if (!originalImage) return;
+
+            // Crear icono 192x192
+            createIcon(192, 0.75);
+            
+            // Crear icono 512x512
+            createIcon(512, 0.75);
+        }
+
+        function createIcon(size, scale) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const ctx = canvas.getContext('2d');
+            
+            // Limpiar canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Fondo con bordes redondeados (color de Vettix)
+            ctx.fillStyle = '#3d407d';
+            roundRect(ctx, 0, 0, size, size, size * 0.25);
+            ctx.fill();
+            
+            // Calcular tamaño de la imagen (75% del canvas para que la huella no desborde)
+            const imageSize = size * scale;
+            const offset = (size - imageSize) / 2;
+            
+            // Dibujar imagen centrada y escalada con bordes redondeados
+            ctx.save();
+            ctx.beginPath();
+            roundRect(ctx, offset, offset, imageSize, imageSize, imageSize * 0.25);
+            ctx.clip();
+            
+            // Dibujar la imagen escalada y centrada
+            ctx.drawImage(originalImage, offset, offset, imageSize, imageSize);
+            ctx.restore();
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const link = document.createElement('a');
+            link.download = `icon-pwa-${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
+
