@@ -337,6 +337,187 @@ const AdminHistoriasClinicas = () => {
     return loadHistoriaClinica(mascotaActiva.id);
   }, [mascotaActiva]);
 
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailAddress, setEmailAddress] = useState('');
+
+  const generarContenidoHistoriaClinica = () => {
+    if (!mascotaActiva || !historiaClinica) return '';
+
+    let contenido = `HISTORIA CLÍNICA - ${mascotaActiva.name.toUpperCase()}\n`;
+    contenido += `========================================\n\n`;
+
+    contenido += `INFORMACIÓN DEL PACIENTE:\n`;
+    contenido += `Nombre: ${mascotaActiva.name}\n`;
+    contenido += `Especie: ${speciesLabels[mascotaActiva.species] || speciesLabels.other}\n`;
+    if (mascotaActiva.breed) contenido += `Raza/Tipo: ${mascotaActiva.breed}\n`;
+    if (mascotaActiva.age) contenido += `Edad: ${mascotaActiva.age} ${Number(mascotaActiva.age) === 1 ? 'año' : 'años'}\n`;
+    if (mascotaActiva.weight) contenido += `Peso: ${mascotaActiva.weight} kg\n`;
+    contenido += `\n`;
+
+    contenido += `INFORMACIÓN GENERAL:\n`;
+    contenido += `Fecha de primera consulta: ${formatDate(historiaClinica.fechaPrimeraConsulta)}\n`;
+    if (historiaClinica.veterinarioPrincipal) {
+      contenido += `Veterinario principal: ${historiaClinica.veterinarioPrincipal}\n`;
+    }
+    if (historiaClinica.sucursalPrincipal) {
+      contenido += `Sucursal principal: ${historiaClinica.sucursalPrincipal}\n`;
+    }
+    contenido += `\n`;
+
+    if (historiaClinica.consultas && historiaClinica.consultas.length > 0) {
+      contenido += `CONSULTAS Y ATENCIONES:\n`;
+      contenido += `========================================\n\n`;
+
+      historiaClinica.consultas.forEach((consulta, index) => {
+        contenido += `Consulta ${index + 1}: ${consulta.tipo || 'Consulta general'}\n`;
+        contenido += `Fecha: ${formatDateTime(consulta.fecha)}\n`;
+        if (consulta.veterinario) contenido += `Veterinario: ${consulta.veterinario}\n`;
+        contenido += `\n`;
+
+        if (consulta.motivo) {
+          contenido += `Motivo de consulta: ${consulta.motivo}\n`;
+        }
+        if (consulta.diagnostico) {
+          contenido += `Diagnóstico: ${consulta.diagnostico}\n`;
+        }
+        if (consulta.tratamiento) {
+          contenido += `Tratamiento: ${consulta.tratamiento}\n`;
+        }
+        if (consulta.observaciones) {
+          contenido += `Observaciones: ${consulta.observaciones}\n`;
+        }
+        if (consulta.vacunas && consulta.vacunas.length > 0) {
+          contenido += `Vacunas aplicadas: ${consulta.vacunas.join(', ')}\n`;
+        }
+        contenido += `\n${'='.repeat(40)}\n\n`;
+      });
+    }
+
+    contenido += `\nGenerado el ${new Date().toLocaleDateString('es-AR')} desde Vettix\n`;
+
+    return contenido;
+  };
+
+  const handleImprimir = () => {
+    if (!mascotaActiva || !historiaClinica) return;
+
+    const contenido = document.getElementById('historia-clinica-print');
+    if (!contenido) return;
+
+    const ventanaImpresion = window.open('', '_blank');
+    ventanaImpresion.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Historia Clínica - ${mascotaActiva.name}</title>
+          <style>
+            @page {
+              margin: 2cm;
+            }
+            body {
+              font-family: Arial, sans-serif;
+              font-size: 12pt;
+              line-height: 1.6;
+              color: #333;
+            }
+            h1 {
+              color: #3d407d;
+              border-bottom: 3px solid #65ccec;
+              padding-bottom: 10px;
+              margin-bottom: 20px;
+            }
+            h2 {
+              color: #3d407d;
+              margin-top: 30px;
+              margin-bottom: 15px;
+              font-size: 16pt;
+            }
+            h3 {
+              color: #65ccec;
+              margin-top: 20px;
+              margin-bottom: 10px;
+              font-size: 14pt;
+            }
+            .header-info {
+              background: #f5f5f5;
+              padding: 15px;
+              border-radius: 5px;
+              margin-bottom: 20px;
+            }
+            .consulta-print {
+              border: 1px solid #ddd;
+              padding: 15px;
+              margin-bottom: 20px;
+              border-radius: 5px;
+              page-break-inside: avoid;
+            }
+            .consulta-header-print {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 10px;
+              padding-bottom: 10px;
+              border-bottom: 1px solid #eee;
+            }
+            strong {
+              color: #3d407d;
+            }
+            ul {
+              margin: 10px 0;
+              padding-left: 20px;
+            }
+            .footer {
+              margin-top: 40px;
+              padding-top: 20px;
+              border-top: 1px solid #ddd;
+              font-size: 10pt;
+              color: #666;
+              text-align: center;
+            }
+            @media print {
+              .no-print {
+                display: none;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          ${contenido.innerHTML}
+          <div class="footer">
+            <p>Documento generado el ${new Date().toLocaleDateString('es-AR')} desde Vettix</p>
+          </div>
+        </body>
+      </html>
+    `);
+    ventanaImpresion.document.close();
+    ventanaImpresion.focus();
+    setTimeout(() => {
+      ventanaImpresion.print();
+    }, 250);
+  };
+
+  const handleEnviarEmail = () => {
+    if (!mascotaActiva || !historiaClinica) return;
+    setEmailAddress(selectedUser?.email || '');
+    setShowEmailModal(true);
+  };
+
+  const confirmarEnvioEmail = () => {
+    if (!emailAddress.trim()) {
+      alert('Por favor, ingresá una dirección de email válida.');
+      return;
+    }
+
+    const contenido = generarContenidoHistoriaClinica();
+    const asunto = encodeURIComponent(`Historia Clínica - ${mascotaActiva.name}`);
+    const cuerpo = encodeURIComponent(contenido);
+
+    const mailtoLink = `mailto:${emailAddress}?subject=${asunto}&body=${cuerpo}`;
+    window.location.href = mailtoLink;
+
+    setShowEmailModal(false);
+    setEmailAddress('');
+  };
+
   return (
     <div className="admin-page">
       <Helmet>
@@ -474,32 +655,124 @@ const AdminHistoriasClinicas = () => {
         {mascotaActiva && (
           <section className="historia-clinica-section">
             <header className="selection-header">
-              <h2>Historia Clínica de {mascotaActiva.name}</h2>
-              <p>Registro completo de consultas, diagnósticos y tratamientos.</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                  <h2>Historia Clínica de {mascotaActiva.name}</h2>
+                  <p>Registro completo de consultas, diagnósticos y tratamientos.</p>
+                </div>
+                {historiaClinica && (
+                  <div className="historia-actions">
+                    <button
+                      type="button"
+                      className="btn-action btn-print"
+                      onClick={handleImprimir}
+                      title="Imprimir historia clínica"
+                    >
+                      <i className="fa-solid fa-print"></i>
+                      Imprimir
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-action btn-email"
+                      onClick={handleEnviarEmail}
+                      title="Enviar por email"
+                    >
+                      <i className="fa-solid fa-envelope"></i>
+                      Enviar por email
+                    </button>
+                  </div>
+                )}
+              </div>
             </header>
 
             {historiaClinica ? (
-              <div className="historia-clinica-content">
-                <div className="historia-clinica-header">
-                  <div className="historia-info">
-                    <h3>Información General</h3>
-                    <ul>
-                      <li>
-                        <strong>Fecha de primera consulta:</strong>{' '}
-                        {formatDate(historiaClinica.fechaPrimeraConsulta)}
-                      </li>
-                      {historiaClinica.veterinarioPrincipal && (
-                        <li>
-                          <strong>Veterinario principal:</strong> {historiaClinica.veterinarioPrincipal}
-                        </li>
-                      )}
-                      {historiaClinica.sucursalPrincipal && (
-                        <li>
-                          <strong>Sucursal principal:</strong> {historiaClinica.sucursalPrincipal}
-                        </li>
-                      )}
-                    </ul>
+              <>
+                <div className="historia-clinica-content">
+                <div id="historia-clinica-print" className="print-content">
+                  <h1>Historia Clínica - {mascotaActiva.name}</h1>
+                  
+                  <div className="header-info">
+                    <h2>Información del Paciente</h2>
+                    <p><strong>Nombre:</strong> {mascotaActiva.name}</p>
+                    <p><strong>Especie:</strong> {speciesLabels[mascotaActiva.species] || speciesLabels.other}</p>
+                    {mascotaActiva.breed && <p><strong>Raza/Tipo:</strong> {mascotaActiva.breed}</p>}
+                    {mascotaActiva.age && (
+                      <p><strong>Edad:</strong> {mascotaActiva.age} {Number(mascotaActiva.age) === 1 ? 'año' : 'años'}</p>
+                    )}
+                    {mascotaActiva.weight && <p><strong>Peso:</strong> {mascotaActiva.weight} kg</p>}
                   </div>
+
+                  <div className="historia-info-print">
+                    <h2>Información General</h2>
+                    <p><strong>Fecha de primera consulta:</strong> {formatDate(historiaClinica.fechaPrimeraConsulta)}</p>
+                    {historiaClinica.veterinarioPrincipal && (
+                      <p><strong>Veterinario principal:</strong> {historiaClinica.veterinarioPrincipal}</p>
+                    )}
+                    {historiaClinica.sucursalPrincipal && (
+                      <p><strong>Sucursal principal:</strong> {historiaClinica.sucursalPrincipal}</p>
+                    )}
+                  </div>
+
+                  <div className="historia-clinica-header">
+                    <div className="historia-info">
+                      <h3>Información General</h3>
+                      <ul>
+                        <li>
+                          <strong>Fecha de primera consulta:</strong>{' '}
+                          {formatDate(historiaClinica.fechaPrimeraConsulta)}
+                        </li>
+                        {historiaClinica.veterinarioPrincipal && (
+                          <li>
+                            <strong>Veterinario principal:</strong> {historiaClinica.veterinarioPrincipal}
+                          </li>
+                        )}
+                        {historiaClinica.sucursalPrincipal && (
+                          <li>
+                            <strong>Sucursal principal:</strong> {historiaClinica.sucursalPrincipal}
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {historiaClinica.consultas && historiaClinica.consultas.length > 0 && (
+                    <div className="consultas-print">
+                      <h2>Consultas y Atenciones</h2>
+                      {historiaClinica.consultas.map((consulta, index) => (
+                        <div key={index} className="consulta-print">
+                          <div className="consulta-header-print">
+                            <div>
+                              <h3>{consulta.tipo || 'Consulta general'}</h3>
+                              <p>{formatDateTime(consulta.fecha)}</p>
+                            </div>
+                            {consulta.veterinario && <p><strong>{consulta.veterinario}</strong></p>}
+                          </div>
+                          {consulta.motivo && (
+                            <p><strong>Motivo de consulta:</strong> {consulta.motivo}</p>
+                          )}
+                          {consulta.diagnostico && (
+                            <p><strong>Diagnóstico:</strong> {consulta.diagnostico}</p>
+                          )}
+                          {consulta.tratamiento && (
+                            <p><strong>Tratamiento:</strong> {consulta.tratamiento}</p>
+                          )}
+                          {consulta.observaciones && (
+                            <p><strong>Observaciones:</strong> {consulta.observaciones}</p>
+                          )}
+                          {consulta.vacunas && consulta.vacunas.length > 0 && (
+                            <div>
+                              <strong>Vacunas aplicadas:</strong>
+                              <ul>
+                                {consulta.vacunas.map((vacuna, vIndex) => (
+                                  <li key={vIndex}>{vacuna}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {historiaClinica.consultas && historiaClinica.consultas.length > 0 && (
@@ -563,6 +836,7 @@ const AdminHistoriasClinicas = () => {
                   </div>
                 )}
               </div>
+              </>
             ) : (
               <div className="empty-state">
                 <i className="fa-solid fa-file-medical"></i>
@@ -571,6 +845,59 @@ const AdminHistoriasClinicas = () => {
               </div>
             )}
           </section>
+        )}
+
+        {showEmailModal && (
+          <div className="modal-overlay" onClick={() => setShowEmailModal(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>Enviar Historia Clínica por Email</h3>
+                <button
+                  type="button"
+                  className="modal-close"
+                  onClick={() => setShowEmailModal(false)}
+                  aria-label="Cerrar"
+                >
+                  <i className="fa-solid fa-times"></i>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p>Se enviará la historia clínica de <strong>{mascotaActiva?.name}</strong> a la siguiente dirección:</p>
+                <div className="form-group">
+                  <label htmlFor="email-address">Dirección de email</label>
+                  <input
+                    id="email-address"
+                    type="email"
+                    value={emailAddress}
+                    onChange={(e) => setEmailAddress(e.target.value)}
+                    placeholder="ejemplo@email.com"
+                    autoFocus
+                  />
+                </div>
+                <p className="modal-note">
+                  <i className="fa-solid fa-info-circle"></i>
+                  Se abrirá tu cliente de email predeterminado con la historia clínica adjunta.
+                </p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn secondary"
+                  onClick={() => setShowEmailModal(false)}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  className="btn primary"
+                  onClick={confirmarEnvioEmail}
+                >
+                  <i className="fa-solid fa-envelope"></i>
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </main>
       <Footer />

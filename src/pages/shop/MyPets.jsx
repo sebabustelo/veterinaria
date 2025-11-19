@@ -88,6 +88,7 @@ const initialFormState = {
   allergies: '',
   chronicConditions: '',
   notes: '',
+  photo: '',
 };
 
 const getAgeFromBirthDate = (birthDate) => {
@@ -169,6 +170,48 @@ const MyPets = () => {
     }
   };
 
+  const handlePhotoChange = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validar que sea una imagen
+    if (!file.type.startsWith('image/')) {
+      showError('Por favor, seleccioná un archivo de imagen válido.');
+      return;
+    }
+
+    // Validar tamaño (máximo 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      showError('La imagen es demasiado grande. El tamaño máximo es 5MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData((prev) => ({
+        ...prev,
+        photo: reader.result,
+      }));
+    };
+    reader.onerror = () => {
+      showError('Error al leer la imagen. Intentá nuevamente.');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemovePhoto = (event) => {
+    event.stopPropagation();
+    setFormData((prev) => ({
+      ...prev,
+      photo: '',
+    }));
+    // Resetear el input file
+    const fileInput = document.getElementById('photo');
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -226,6 +269,7 @@ const MyPets = () => {
       allergies: pet.allergies || '',
       chronicConditions: pet.chronicConditions || '',
       notes: pet.notes || '',
+      photo: pet.photo || '',
     });
     setEditingId(pet.id);
     showInfo(`Editando la ficha de ${pet.name}`);
@@ -306,6 +350,45 @@ const MyPets = () => {
                   placeholder="Ej: Lola"
                   required
                 />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="photo">Foto de la mascota</label>
+                <div className="photo-upload-container">
+                  {formData.photo ? (
+                    <div className="photo-preview">
+                      <label htmlFor="photo" className="photo-preview-label">
+                        <img src={formData.photo} alt="Vista previa" />
+                        <div className="photo-overlay">
+                          <i className="fa-solid fa-camera"></i>
+                          <span>Cambiar foto</span>
+                        </div>
+                      </label>
+                      <button
+                        type="button"
+                        className="btn-remove-photo"
+                        onClick={handleRemovePhoto}
+                        aria-label="Eliminar foto"
+                      >
+                        <i className="fa-solid fa-times"></i>
+                      </button>
+                    </div>
+                  ) : (
+                    <label htmlFor="photo" className="photo-upload-label">
+                      <i className="fa-solid fa-camera"></i>
+                      <span>Hacé clic para subir una foto</span>
+                      <small>JPG, PNG o GIF (máx. 5MB)</small>
+                    </label>
+                  )}
+                  <input
+                    id="photo"
+                    name="photo"
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoChange}
+                    style={{ display: 'none' }}
+                  />
+                </div>
               </div>
 
               <div className="form-grid">
@@ -557,9 +640,13 @@ const MyPets = () => {
                   <article key={pet.id} className="pet-card">
                     <header className="pet-card-header">
                       <div className="pet-avatar">
-                        <span aria-hidden="true">
-                          {pet.name?.charAt(0).toUpperCase() || '🐾'}
-                        </span>
+                        {pet.photo ? (
+                          <img src={pet.photo} alt={pet.name} />
+                        ) : (
+                          <span aria-hidden="true">
+                            {pet.name?.charAt(0).toUpperCase() || '🐾'}
+                          </span>
+                        )}
                       </div>
                       <div>
                         <h3>{pet.name}</h3>

@@ -142,6 +142,131 @@
   box-shadow: 0 0 0 3px rgba(101, 204, 236, 0.25);
 }
 
+.photo-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.photo-upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem 1rem;
+  border: 2px dashed rgba(124, 124, 181, 0.32);
+  border-radius: 12px;
+  background: rgba(136, 187, 227, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.photo-upload-label:hover {
+  border-color: var(--accent);
+  background: rgba(101, 204, 236, 0.15);
+  color: var(--primary);
+}
+
+.photo-upload-label i {
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.photo-upload-label span {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.photo-upload-label small {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.photo-preview {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(124, 124, 181, 0.26);
+  box-shadow: 0 4px 12px rgba(61, 64, 125, 0.1);
+}
+
+.photo-preview-label {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+}
+
+.photo-preview-label img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: #fff;
+}
+
+.photo-preview-label:hover .photo-overlay {
+  opacity: 1;
+}
+
+.photo-overlay i {
+  font-size: 1.5rem;
+}
+
+.photo-overlay span {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.btn-remove-photo {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(212, 107, 107, 0.9);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-remove-photo:hover {
+  background: #d46b6b;
+  transform: scale(1.1);
+}
+
+.btn-remove-photo i {
+  font-size: 0.9rem;
+}
+
 .form-grid {
   display: grid;
   gap: 1rem;
@@ -268,6 +393,14 @@
   justify-content: center;
   font-weight: 700;
   font-size: 1.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.pet-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .pet-card-header h3 {

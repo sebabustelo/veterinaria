@@ -265,7 +265,7 @@ const AdminSucursales = () => {
         </section>
 
         <div className="admin-actions-bar">
-         
+        <br />  <br /> 
           <button
             type="button"
             className="admin-card-link"
@@ -402,6 +402,7 @@ const AdminSucursales = () => {
         <div className="modal-overlay" onClick={() => setShowModalNuevaSucursal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
+            
               <h2>Agregar Nueva Sucursal</h2>
               <button
                 type="button"

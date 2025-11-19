@@ -601,6 +601,12 @@ const AdminTurnos = () => {
   };
 
   const [turnosRegistrados, setTurnosRegistrados] = useState([]);
+  const [activeTab, setActiveTab] = useState('nuevo');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterEstado, setFilterEstado] = useState('all');
+  const [filterSucursal, setFilterSucursal] = useState('all');
+  const [filterModalidad, setFilterModalidad] = useState('all');
+  const [sortBy, setSortBy] = useState('fecha-desc');
 
   useEffect(() => {
     try {
@@ -682,6 +688,7 @@ const AdminTurnos = () => {
     showSuccess('Turno registrado y asignado correctamente.');
     setFechaSeleccionada(null);
     setHoraSeleccionada(null);
+    setActiveTab('agenda');
   };
 
   const actualizarEstadoTurno = (turnoId, nuevoEstado) => {
@@ -694,6 +701,74 @@ const AdminTurnos = () => {
     if (!window.confirm('¿Deseás eliminar este turno?')) return;
     setTurnosRegistrados((prev) => prev.filter((turno) => turno.id !== turnoId));
   };
+
+  const turnosFiltrados = useMemo(() => {
+    let filtrados = [...turnosRegistrados];
+
+    // Búsqueda por texto
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtrados = filtrados.filter(
+        (turno) =>
+          turno.userName?.toLowerCase().includes(query) ||
+          turno.userEmail?.toLowerCase().includes(query) ||
+          turno.petName?.toLowerCase().includes(query) ||
+          turno.sucursalNombre?.toLowerCase().includes(query) ||
+          turno.proveedorNombre?.toLowerCase().includes(query)
+      );
+    }
+
+    // Filtro por estado
+    if (filterEstado !== 'all') {
+      filtrados = filtrados.filter((turno) => turno.estado === filterEstado);
+    }
+
+    // Filtro por sucursal
+    if (filterSucursal !== 'all') {
+      filtrados = filtrados.filter((turno) => turno.sucursalId === Number(filterSucursal));
+    }
+
+    // Filtro por modalidad
+    if (filterModalidad !== 'all') {
+      filtrados = filtrados.filter((turno) => turno.modalidad === filterModalidad);
+    }
+
+    // Ordenamiento
+    filtrados.sort((a, b) => {
+      switch (sortBy) {
+        case 'fecha-asc':
+          const fechaA = new Date(`${a.fechaISO}T${a.hora}`);
+          const fechaB = new Date(`${b.fechaISO}T${b.hora}`);
+          return fechaA - fechaB;
+        case 'fecha-desc':
+          const fechaA2 = new Date(`${a.fechaISO}T${a.hora}`);
+          const fechaB2 = new Date(`${b.fechaISO}T${b.hora}`);
+          return fechaB2 - fechaA2;
+        case 'cliente-asc':
+          return (a.userName || '').localeCompare(b.userName || '');
+        case 'cliente-desc':
+          return (b.userName || '').localeCompare(a.userName || '');
+        case 'estado-asc':
+          return (a.estado || '').localeCompare(b.estado || '');
+        case 'estado-desc':
+          return (b.estado || '').localeCompare(a.estado || '');
+        default:
+          return 0;
+      }
+    });
+
+    return filtrados;
+  }, [turnosRegistrados, searchQuery, filterEstado, filterSucursal, filterModalidad, sortBy]);
+
+  const limpiarFiltros = () => {
+    setSearchQuery('');
+    setFilterEstado('all');
+    setFilterSucursal('all');
+    setFilterModalidad('all');
+    setSortBy('fecha-desc');
+  };
+
+  const tieneFiltrosActivos = searchQuery.trim() || filterEstado !== 'all' || filterSucursal !== 'all' || filterModalidad !== 'all';
 
   const mostrarCalendario = Boolean(proveedorActivo);
 
@@ -738,11 +813,36 @@ const AdminTurnos = () => {
             Volver al Admin
           </button>
         </div>
-        <section className="selection-panel">
-          <header className="selection-header">
-            <h2>Seleccioná el tipo de turno</h2>
-            <p>Definí si el caso es programado, emergencia o atención directa antes de asignar la agenda.</p>
-          </header>
+        <div className="admin-tabs">
+          <div className="tabs-header">
+            <button
+              type="button"
+              className={`tab-button ${activeTab === 'nuevo' ? 'active' : ''}`}
+              onClick={() => setActiveTab('nuevo')}
+            >
+              <i className="fa-solid fa-calendar-plus"></i>
+              Nuevo Turno
+            </button>
+            <button
+              type="button"
+              className={`tab-button ${activeTab === 'agenda' ? 'active' : ''}`}
+              onClick={() => setActiveTab('agenda')}
+            >
+              <i className="fa-solid fa-calendar-days"></i>
+              Agenda de Turnos
+              {turnosRegistrados.length > 0 && (
+                <span className="tab-badge">{turnosRegistrados.length}</span>
+              )}
+            </button>
+          </div>
+
+          {activeTab === 'nuevo' && (
+            <div className="tab-content">
+              <section className="selection-panel">
+                <header className="selection-header">
+                  <h2>Seleccioná el tipo de turno</h2>
+                  <p>Definí si el caso es programado, emergencia o atención directa antes de asignar la agenda.</p>
+                </header>
           <div className="turno-category-toggle" role="group" aria-label="Tipo de turno">
             {Object.entries(categoriaLabels).map(([value, label]) => (
               <button
@@ -1422,116 +1522,257 @@ const AdminTurnos = () => {
             </div>
           </section>
         )}
+          </div>
+          )}
 
-        <section className="turnos-admin-list">
-          <header className="selection-header">
-            <h2>Agenda de turnos</h2>
-            <p>Seguimiento de los turnos asignados por el equipo administrativo.</p>
-          </header>
-          {turnosRegistrados.length === 0 ? (
-            <div className="empty-state">
-              <i className="fa-solid fa-calendar-days"></i>
-              <h3>Sin turnos registrados</h3>
-              <p>Registrá nuevos turnos para verlos listados aquí y actualizar su estado.</p>
-            </div>
-          ) : (
-            <div className="turnos-table-wrapper">
-              <table className="turnos-admin-table">
-                <thead>
-                  <tr>
-                    <th>Cliente · Mascota</th>
-                    <th>Sucursal</th>
-                    <th>Profesional</th>
-                    <th>Fecha y hora</th>
-                    <th>Modalidad / Tipo</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {turnosRegistrados.slice(0, 5).map((turno) => (
-                    <tr key={turno.id}>
-                      <td data-label="Cliente y mascota">
-                        <div className="client-pet-cell">
-                          <div className="cliente-cell">
-                            <strong>{turno.userName}</strong>
-                            <span>{turno.userEmail}</span>
-                          </div>
-                          {turno.petName ? (
-                            <div className="pet-cell">
-                              <strong>{turno.petName}</strong>
-                              <span>{turno.petSpeciesLabel || speciesLabels[turno.petSpecies] || speciesLabels.other}</span>
-                            </div>
-                          ) : (
-                            <span className="table-pill muted">Sin mascota cargada</span>
-                          )}
-                        </div>
-                      </td>
-                      <td data-label="Sucursal">
-                        <span className="table-pill">{turno.sucursalNombre}</span>
-                      </td>
-                      <td data-label="Profesional">
-                        <div className="profesional-cell">
-                          <strong>{turno.proveedorNombre}</strong>
-                          <span>{turno.proveedorDetalle}</span>
-                        </div>
-                      </td>
-                      <td data-label="Fecha y hora">
-                        <div className="cell-datetime">
-                          <span className="cell-date">{new Date(turno.fechaISO).toLocaleDateString('es-AR')}</span>
-                          <span className="cell-time">{turno.hora}</span>
-                        </div>
-                      </td>
-                      <td data-label="Modalidad / Tipo">
-                        <div className="cell-mode">
-                          <span>{categoriaLabels[turno.modalidad] || categoriaLabels.programado}</span>
-                          <span className="summary-muted">{turno.tipo === 'atencion_directa' ? 'Atención directa' : 'Servicio complementario'}</span>
-                        </div>
-                      </td>
-                      <td data-label="Estado">
-                        <span className={`turno-status status-${turno.estado}`}>
-                          {estadoLabels[turno.estado] || turno.estado}
-                        </span>
-                      </td>
-                      <td data-label="Acciones">
-                        <div className="turnos-actions icon-only">
-                          {turno.estado !== 'confirmado' && turno.estado !== 'completado' && (
+          {activeTab === 'agenda' && (
+            <div className="tab-content">
+              <section className="turnos-admin-list">
+                <header className="selection-header">
+                  <h2>Agenda de turnos</h2>
+                  <p>Seguimiento de los turnos asignados por el equipo administrativo.</p>
+                </header>
+
+                {turnosRegistrados.length > 0 && (
+                  <div className="filters-panel">
+                    <div className="filters-row">
+                      <div className="filter-group search-group">
+                        <label htmlFor="search-turnos" className="sr-only">
+                          Buscar turnos
+                        </label>
+                        <div className="search-input-wrapper">
+                          <i className="fa-solid fa-magnifying-glass"></i>
+                          <input
+                            id="search-turnos"
+                            type="search"
+                            placeholder="Buscar por cliente, mascota, email, sucursal o profesional..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="search-input"
+                          />
+                          {searchQuery && (
                             <button
                               type="button"
-                              className="action-icon"
-                              onClick={() => actualizarEstadoTurno(turno.id, 'confirmado')}
-                              title="Confirmar turno"
+                              className="clear-search"
+                              onClick={() => setSearchQuery('')}
+                              aria-label="Limpiar búsqueda"
                             >
-                              <i className="fa-solid fa-circle-check"></i>
+                              <i className="fa-solid fa-times"></i>
                             </button>
                           )}
-                          {turno.estado !== 'completado' && (
-                            <button
-                              type="button"
-                              className="action-icon secondary"
-                              onClick={() => actualizarEstadoTurno(turno.id, 'completado')}
-                              title="Marcar como completado"
-                            >
-                              <i className="fa-solid fa-circle-check"></i>
-                            </button>
-                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="filters-row">
+                      <div className="filter-group">
+                        <label htmlFor="filter-estado">Estado</label>
+                        <select
+                          id="filter-estado"
+                          value={filterEstado}
+                          onChange={(e) => setFilterEstado(e.target.value)}
+                        >
+                          <option value="all">Todos los estados</option>
+                          <option value="pendiente">Pendiente</option>
+                          <option value="confirmado">Confirmado</option>
+                          <option value="completado">Completado</option>
+                        </select>
+                      </div>
+
+                      <div className="filter-group">
+                        <label htmlFor="filter-sucursal">Sucursal</label>
+                        <select
+                          id="filter-sucursal"
+                          value={filterSucursal}
+                          onChange={(e) => setFilterSucursal(e.target.value)}
+                        >
+                          <option value="all">Todas las sucursales</option>
+                          {sucursales.map((sucursal) => (
+                            <option key={sucursal.id} value={sucursal.id}>
+                              {sucursal.nombre}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="filter-group">
+                        <label htmlFor="filter-modalidad">Modalidad</label>
+                        <select
+                          id="filter-modalidad"
+                          value={filterModalidad}
+                          onChange={(e) => setFilterModalidad(e.target.value)}
+                        >
+                          <option value="all">Todas las modalidades</option>
+                          {Object.entries(categoriaLabels).map(([value, label]) => (
+                            <option key={value} value={value}>
+                              {label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="filter-group">
+                        <label htmlFor="sort-turnos">Ordenar por</label>
+                        <select
+                          id="sort-turnos"
+                          value={sortBy}
+                          onChange={(e) => setSortBy(e.target.value)}
+                        >
+                          <option value="fecha-desc">Fecha (más recientes)</option>
+                          <option value="fecha-asc">Fecha (más antiguos)</option>
+                          <option value="cliente-asc">Cliente (A-Z)</option>
+                          <option value="cliente-desc">Cliente (Z-A)</option>
+                          <option value="estado-asc">Estado (A-Z)</option>
+                          <option value="estado-desc">Estado (Z-A)</option>
+                        </select>
+                      </div>
+
+                      {tieneFiltrosActivos && (
+                        <div className="filter-group">
                           <button
                             type="button"
-                            className="action-icon danger"
-                            onClick={() => eliminarTurno(turno.id)}
-                            title="Eliminar turno"
+                            className="btn-clear-filters"
+                            onClick={limpiarFiltros}
                           >
-                            <i className="fa-solid fa-trash"></i>
+                            <i className="fa-solid fa-xmark"></i>
+                            Limpiar filtros
                           </button>
                         </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      )}
+                    </div>
+
+                    <div className="filters-summary">
+                      <span>
+                        Mostrando <strong>{turnosFiltrados.length}</strong> de <strong>{turnosRegistrados.length}</strong> turnos
+                        {tieneFiltrosActivos && ' (filtrados)'}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {turnosRegistrados.length === 0 ? (
+                  <div className="empty-state">
+                    <i className="fa-solid fa-calendar-days"></i>
+                    <h3>Sin turnos registrados</h3>
+                    <p>Registrá nuevos turnos para verlos listados aquí y actualizar su estado.</p>
+                  </div>
+                ) : turnosFiltrados.length === 0 ? (
+                  <div className="empty-state">
+                    <i className="fa-solid fa-filter"></i>
+                    <h3>No se encontraron turnos</h3>
+                    <p>No hay turnos que coincidan con los filtros seleccionados.</p>
+                    {tieneFiltrosActivos && (
+                      <button
+                        type="button"
+                        className="btn primary"
+                        onClick={limpiarFiltros}
+                        style={{ marginTop: '1rem' }}
+                      >
+                        Limpiar filtros
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div className="turnos-table-wrapper">
+                    <table className="turnos-admin-table">
+                      <thead>
+                        <tr>
+                          <th>Cliente · Mascota</th>
+                          <th>Sucursal</th>
+                          <th>Profesional</th>
+                          <th>Fecha y hora</th>
+                          <th>Modalidad / Tipo</th>
+                          <th>Estado</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {turnosFiltrados.map((turno) => (
+                          <tr key={turno.id}>
+                            <td data-label="Cliente y mascota">
+                              <div className="client-pet-cell">
+                                <div className="cliente-cell">
+                                  <strong>{turno.userName}</strong>
+                                  <span>{turno.userEmail}</span>
+                                </div>
+                                {turno.petName ? (
+                                  <div className="pet-cell">
+                                    <strong>{turno.petName}</strong>
+                                    <span>{turno.petSpeciesLabel || speciesLabels[turno.petSpecies] || speciesLabels.other}</span>
+                                  </div>
+                                ) : (
+                                  <span className="table-pill muted">Sin mascota cargada</span>
+                                )}
+                              </div>
+                            </td>
+                            <td data-label="Sucursal">
+                              <span className="table-pill">{turno.sucursalNombre}</span>
+                            </td>
+                            <td data-label="Profesional">
+                              <div className="profesional-cell">
+                                <strong>{turno.proveedorNombre}</strong>
+                                <span>{turno.proveedorDetalle}</span>
+                              </div>
+                            </td>
+                            <td data-label="Fecha y hora">
+                              <div className="cell-datetime">
+                                <span className="cell-date">{new Date(turno.fechaISO).toLocaleDateString('es-AR')}</span>
+                                <span className="cell-time">{turno.hora}</span>
+                              </div>
+                            </td>
+                            <td data-label="Modalidad / Tipo">
+                              <div className="cell-mode">
+                                <span>{categoriaLabels[turno.modalidad] || categoriaLabels.programado}</span>
+                                <span className="summary-muted">{turno.tipo === 'atencion_directa' ? 'Atención directa' : 'Servicio complementario'}</span>
+                              </div>
+                            </td>
+                            <td data-label="Estado">
+                              <span className={`turno-status status-${turno.estado}`}>
+                                {estadoLabels[turno.estado] || turno.estado}
+                              </span>
+                            </td>
+                            <td data-label="Acciones">
+                              <div className="turnos-actions icon-only">
+                                {turno.estado !== 'confirmado' && turno.estado !== 'completado' && (
+                                  <button
+                                    type="button"
+                                    className="action-icon"
+                                    onClick={() => actualizarEstadoTurno(turno.id, 'confirmado')}
+                                    title="Confirmar turno"
+                                  >
+                                    <i className="fa-solid fa-circle-check"></i>
+                                  </button>
+                                )}
+                                {turno.estado !== 'completado' && (
+                                  <button
+                                    type="button"
+                                    className="action-icon secondary"
+                                    onClick={() => actualizarEstadoTurno(turno.id, 'completado')}
+                                    title="Marcar como completado"
+                                  >
+                                    <i className="fa-solid fa-circle-check"></i>
+                                  </button>
+                                )}
+                                <button
+                                  type="button"
+                                  className="action-icon danger"
+                                  onClick={() => eliminarTurno(turno.id)}
+                                  title="Eliminar turno"
+                                >
+                                  <i className="fa-solid fa-trash"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </section>
             </div>
           )}
-        </section>
+        </div>
       </main>
       <Footer />
     </div>
