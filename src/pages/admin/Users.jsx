@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../components/estaticos/HeaderAdmin';
 import Footer from '../../components/estaticos/Footer';
 import adminUsuariosData from '@/data/adminUsuarios.json';
@@ -98,6 +98,7 @@ const initialUserForm = {
 };
 
 const AdminUsuarios = () => {
+  const navigate = useNavigate();
   const resumenRolesBase = adminUsuariosData.resumen_roles ?? {};
   const [personas, setPersonas] = useState(() =>
     (adminUsuariosData.personas ?? []).map(normalizarPersona)

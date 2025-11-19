@@ -29,6 +29,7 @@ const AdminSucursales = lazy(() => import('@/pages/admin/AdminSucursales'))
 import ToastContainer from '@/components/ToastContainer'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import PWAInstallButton from '@/components/PWAInstallButton'
+import ScrollToTop from '@/components/ScrollToTop'
 import './index.css'
 
 const queryClient = new QueryClient()
@@ -63,10 +64,9 @@ function AppRoutes() {
   const { user } = useAuth();
   const { toasts, removeToast } = useToast();
 
-
-
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/acercade' element={<AcercaDe />} />
