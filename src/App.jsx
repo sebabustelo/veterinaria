@@ -26,6 +26,7 @@ import ResetPassword from '@/components/ResetPassword'
 const AdminPedidos = lazy(() => import('@/pages/admin/AdminPedidos'))
 const AdminEstadisticas = lazy(() => import('@/pages/admin/AdminEstadisticas'))
 const AdminSucursales = lazy(() => import('@/pages/admin/AdminSucursales'))
+const AdminPromociones = lazy(() => import('@/pages/admin/AdminPromociones'))
 import ToastContainer from '@/components/ToastContainer'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import PWAInstallButton from '@/components/PWAInstallButton'
@@ -137,6 +138,11 @@ function AppRoutes() {
             <UsersProvider>
               <AdminHistoriasClinicas />
             </UsersProvider>
+          </RutasProtegidas>
+        } />
+        <Route path='/admin/promociones' element={
+          <RutasProtegidas isAuthenticated={!!user} roles={['admin']}>
+            <AdminPromociones />
           </RutasProtegidas>
         } />
 

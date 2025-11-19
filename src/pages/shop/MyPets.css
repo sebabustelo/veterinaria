@@ -142,6 +142,58 @@
   box-shadow: 0 0 0 3px rgba(101, 204, 236, 0.25);
 }
 
+.form-hint {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: rgba(101, 204, 236, 0.08);
+  border: 1px solid rgba(101, 204, 236, 0.2);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.checkbox-label:hover {
+  background: rgba(101, 204, 236, 0.12);
+  border-color: rgba(101, 204, 236, 0.3);
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: var(--accent);
+}
+
+.checkbox-label span {
+  flex: 1;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.checkbox-label span i {
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+
+.checkbox-label span strong {
+  color: #E4405F;
+  font-weight: 600;
+}
+
 .photo-upload-container {
   display: flex;
   flex-direction: column;
@@ -403,10 +455,55 @@
   object-fit: cover;
 }
 
+.pet-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pet-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .pet-card-header h3 {
   margin: 0;
   color: var(--primary);
   font-size: 1.3rem;
+  flex: 1;
+}
+
+.pet-instagram-link {
+  color: #E4405F;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: transform 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(228, 64, 95, 0.1);
+}
+
+.pet-instagram-link:hover {
+  color: #C13584;
+  transform: scale(1.1);
+  background: rgba(228, 64, 95, 0.15);
+}
+
+.pet-tagging-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(101, 204, 236, 0.15);
+  color: var(--accent);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .pet-card-header p {

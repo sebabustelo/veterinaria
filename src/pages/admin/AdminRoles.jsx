@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../../utils/apiConfig';
 import HeaderAdmin from '../../components/estaticos/HeaderAdmin';
 import Footer from '../../components/estaticos/Footer';
@@ -9,6 +9,7 @@ import './Users.css';
 import './AdminRoles.css';
 
 const AdminRoles = () => {
+    const navigate = useNavigate();
     const [roles, setRoles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedRole, setSelectedRole] = useState(null);
@@ -354,11 +355,18 @@ const AdminRoles = () => {
                             <i className="fa-solid fa-plus"></i>
                             Nuevo Rol
                         </button>
-                        <Link to="/admin" className="back-button">
-                            <i className="fa-solid fa-arrow-left"></i>
-                            Volver al Admin
-                        </Link>
                     </div>
+                </div>
+
+                <div className="admin-actions-bar">
+                    <button
+                        type="button"
+                        className="admin-card-link"
+                        onClick={() => navigate('/admin')}
+                    >
+                        <i className="fa-solid fa-arrow-left"></i>
+                        Volver al Admin
+                    </button>
                 </div>
 
                 {/* Barra de búsqueda */}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import HeaderAdmin from '../../components/estaticos/HeaderAdmin';
 import Footer from '../../components/estaticos/Footer';
@@ -26,6 +27,7 @@ const revenueTrend = [
 ];
 
 const AdminEstadisticas = () => {
+  const navigate = useNavigate();
   const { totals, appointmentsByService, revenueStreams, occupancyByBranch, petHotelStats, alerts, reportPeriod } = statsData;
 
   return (
@@ -36,7 +38,7 @@ const AdminEstadisticas = () => {
       </Helmet>
       <HeaderAdmin />
       <main className="main-content admin-stats">
-        <section className="turnos-hero admin-stats-hero">
+        <section className="admin-hero">
           <div>
             <span className="hero-tag hero-tag-contrast">Reporte mensual</span>
             <h1>KPIs operativos</h1>
@@ -52,6 +54,17 @@ const AdminEstadisticas = () => {
             </ul>
           </div>
         </section>
+
+        <div className="admin-actions-bar">
+          <button
+            type="button"
+            className="admin-card-link"
+            onClick={() => navigate('/admin')}
+          >
+            <i className="fa-solid fa-arrow-left"></i>
+            Volver al Admin
+          </button>
+        </div>
 
         <section className="stats-grid">
           <article className="stat-tile">

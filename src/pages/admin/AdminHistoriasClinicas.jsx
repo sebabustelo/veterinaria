@@ -540,7 +540,7 @@ const AdminHistoriasClinicas = () => {
           </div>
         </section>
 
-        <div className="admin-actions-bar" style={{marginTop: "2rem"}}>
+        <div className="admin-actions-bar">
           <button
             type="button"
             className="admin-card-link"

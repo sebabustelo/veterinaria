@@ -20,6 +20,13 @@ const negocioCards = [
     to: "/admin/pedidos",
     label: "Ver ventas",
   },
+  {
+    icon: "fa-solid fa-tags",
+    title: "Promociones",
+    description: "Creá y gestioná descuentos, ofertas especiales y campañas promocionales para productos y servicios.",
+    to: "/admin/promociones",
+    label: "Gestionar promociones",
+  },
 ];
 
 const operativaCards = [

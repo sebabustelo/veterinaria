@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HeaderAdmin from "../../components/estaticos/HeaderAdmin";
 import Footer from "../../components/estaticos/Footer";
 import salesData from "@/data/adminSales.json";
@@ -23,6 +23,7 @@ const formatDateTime = (dateString) =>
   });
 
 const AdminPedidos = () => {
+  const navigate = useNavigate();
   const pedidos = salesData.ventas ?? [];
   const metadata = salesData.metadata ?? {};
 
@@ -101,7 +102,17 @@ const AdminPedidos = () => {
             </ul>
           </div>
         </section>
-
+        <div className="admin-actions-bar">
+          <button
+            type="button"
+            className="admin-card-link"
+            onClick={() => navigate('/admin')}
+          >
+            <i className="fa-solid fa-arrow-left"></i>
+            Volver al Admin
+          </button>
+          
+        </div>
         <section className="orders-search">
           <div className="search-box">
             <i className="fa-solid fa-search search-icon"></i>&nbsp;
@@ -117,11 +128,9 @@ const AdminPedidos = () => {
               </button>
             )}
           </div>
-          <Link to="/admin" className="admin-card-link">
-            <i className="fa-solid fa-arrow-left"></i>
-            Volver al Admin
-          </Link>
+       
         </section>
+        
 
         <section className="orders-grid">
           {filteredPedidos.length === 0 ? (

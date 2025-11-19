@@ -89,6 +89,8 @@ const initialFormState = {
   chronicConditions: '',
   notes: '',
   photo: '',
+  instagram: '',
+  allowTagging: false,
 };
 
 const getAgeFromBirthDate = (birthDate) => {
@@ -156,9 +158,16 @@ const MyPets = () => {
 
   const handleFieldChange = (event) => {
     const { name, value, type, checked } = event.target;
+    let processedValue = type === 'checkbox' ? checked : value;
+    
+    // Normalizar Instagram: remover @ y espacios
+    if (name === 'instagram' && processedValue) {
+      processedValue = processedValue.replace('@', '').trim();
+    }
+    
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: processedValue,
     }));
     if (name === 'birthDate') {
       const computedAge = getAgeFromBirthDate(value);
@@ -579,6 +588,41 @@ const MyPets = () => {
                 />
               </div>
 
+              <div className="form-group">
+                <label htmlFor="instagram">
+                  <i className="fa-brands fa-instagram"></i> Instagram de la mascota
+                </label>
+                <input
+                  type="text"
+                  id="instagram"
+                  name="instagram"
+                  value={formData.instagram}
+                  onChange={handleFieldChange}
+                  placeholder="Ej: @lola_labrador"
+                />
+                <small className="form-hint">Opcional: Ingresá el usuario de Instagram sin el @</small>
+              </div>
+
+              {formData.instagram && (
+                <div className="form-group">
+                  <label className="checkbox-label">
+                    <input
+                      type="checkbox"
+                      name="allowTagging"
+                      checked={formData.allowTagging}
+                      onChange={handleFieldChange}
+                    />
+                    <span>
+                      <i className="fa-solid fa-check-circle"></i> Permitir que Vettix etiquete a{' '}
+                      <strong>@{formData.instagram}</strong> en nuestras publicaciones
+                    </span>
+                  </label>
+                  <small className="form-hint">
+                    Podremos etiquetar a tu mascota en fotos de turnos, procedimientos o eventos especiales
+                  </small>
+                </div>
+              )}
+
               <div className="form-actions">
                 <button type="submit" className="btn btn-primary">
                   {editingId ? 'Guardar cambios' : 'Agregar mascota'}
@@ -648,12 +692,30 @@ const MyPets = () => {
                           </span>
                         )}
                       </div>
-                      <div>
-                        <h3>{pet.name}</h3>
+                      <div className="pet-header-info">
+                        <div className="pet-name-row">
+                          <h3>{pet.name}</h3>
+                          {pet.instagram && (
+                            <a
+                              href={`https://instagram.com/${pet.instagram.replace('@', '')}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="pet-instagram-link"
+                              title={`Instagram: @${pet.instagram.replace('@', '')}`}
+                            >
+                              <i className="fa-brands fa-instagram"></i>
+                            </a>
+                          )}
+                        </div>
                         <p>
                           {speciesOptions.find((item) => item.value === pet.species)?.label || 'Mascota'} ·{' '}
                           {pet.breed}
                         </p>
+                        {pet.instagram && pet.allowTagging && (
+                          <small className="pet-tagging-badge">
+                            <i className="fa-solid fa-check-circle"></i> Etiquetado permitido
+                          </small>
+                        )}
                       </div>
                     </header>
 
