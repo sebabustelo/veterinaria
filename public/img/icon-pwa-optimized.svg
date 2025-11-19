@@ -11,7 +11,7 @@
   </defs>
   
   <!-- Fondo -->
-  <rect width="512" height="512" rx="128" ry="128" fill="#3d407d"/>
+  <rect width="512" height="512" rx="128" ry="128" fill="#ffffff"/>
   
   <!-- Área de contenido seguro (75% del tamaño para mejor visualización) -->
   <g clip-path="url(#safe-zone)">

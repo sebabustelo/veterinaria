@@ -1,7 +1,10 @@
-const CACHE_NAME = 'vettix-v1';
+const CACHE_NAME = 'vettix-v3';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/manifest.json',
+  '/img/icon-pwa-192.png',
+  '/img/icon-pwa-512.png',
   '/img/icon.png',
   '/img/icon2.png',
   '/img/logo.png',
@@ -35,13 +38,23 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
+    }).then(() => {
+      // Forzar que todos los clientes usen el nuevo service worker
+      return self.clients.claim();
     })
   );
-  return self.clients.claim();
 });
 
 // Interceptar peticiones
 self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+  
+  // No cachear el manifest.json, siempre obtener la versión más reciente
+  if (url.pathname === '/manifest.json') {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+  
   event.respondWith(
     caches.match(event.request)
       .then((response) => {

@@ -3,14 +3,32 @@ export const registerServiceWorker = () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker
-        .register('/service-worker.js')
+        .register('/service-worker.js', { updateViaCache: 'none' })
         .then((registration) => {
           console.log('Service Worker registrado exitosamente:', registration.scope);
           
-          // Verificar actualizaciones cada hora
+          // Verificar actualizaciones inmediatamente y luego periódicamente
+          registration.update();
+          
+          // Verificar actualizaciones cada 5 minutos
           setInterval(() => {
             registration.update();
-          }, 60 * 60 * 1000);
+          }, 5 * 60 * 1000);
+          
+          // Escuchar actualizaciones del service worker
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // Hay una nueva versión disponible
+                  console.log('Nueva versión del Service Worker disponible');
+                  // Recargar la página para usar la nueva versión
+                  window.location.reload();
+                }
+              });
+            }
+          });
         })
         .catch((error) => {
           console.error('Error al registrar Service Worker:', error);
