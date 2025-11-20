@@ -233,8 +233,8 @@
       },
       {
         "persona_id": 1,
-        "email": "juanperez@mail.com",
-        "password": "cliente123",
+        "email": "juan@vettix.com",
+        "password": "juan123",
         "roles": ["cliente"]
       }
     ],
@@ -283,6 +283,60 @@
       "total_usuarios_sistema": 5,
       "roles_disponibles": ["cliente", "veterinario", "personal_servicio", "administrativo", "admin"]
     },
+    "mascotas": [
+      {
+        "persona_id": 1,
+        "email": "juan@vettix.com",
+        "pets": [
+          {
+            "id": "pet-juan-1",
+            "name": "Laika",
+            "species": "dog",
+            "breed": "Mestizo",
+            "age": 5,
+            "weight": 25,
+            "sex": "female",
+            "color": "Negro con manchas blancas en pecho y patas",
+            "birthDate": "2019-06-10",
+            "microchip": "123456789012345",
+            "vaccinated": true,
+            "dewormed": true,
+            "sterilized": true,
+            "allergies": null,
+            "chronicConditions": null,
+            "notes": "Consulta general y plan de vacunación. Muy activa y juguetona, requiere ejercicio diario.",
+            "photo": "/img/mascotas/laika.jpg",
+            "instagram": "laika_vettix",
+            "allowTagging": true,
+            "createdAt": "2024-01-15T10:00:00.000Z",
+            "updatedAt": "2024-01-15T10:00:00.000Z"
+          },
+          {
+            "id": "pet-juan-2",
+            "name": "Kanon",
+            "species": "cat",
+            "breed": "Mestizo",
+            "age": 4,
+            "weight": 5.2,
+            "sex": "male",
+            "color": "Naranja atigrado",
+            "birthDate": "2020-08-20",
+            "microchip": "987654321098765",
+            "vaccinated": true,
+            "dewormed": true,
+            "sterilized": true,
+            "allergies": null,
+            "chronicConditions": null,
+            "notes": "Control anual de salud. Gato tranquilo y cariñoso.",
+            "photo": "/img/mascotas/kanon.jpg",
+            "instagram": "kanon_vettix",
+            "allowTagging": true,
+            "createdAt": "2024-01-15T10:00:00.000Z",
+            "updatedAt": "2024-01-15T10:00:00.000Z"
+          }
+        ]
+      }
+    ],
     "metadata": {
       "fecha_actualizacion": "2025-11-08T08:17:18.000"
     }

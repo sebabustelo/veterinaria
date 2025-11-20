@@ -3,6 +3,7 @@ import Header from '@/components/estaticos/Header';
 import Footer from '@/components/estaticos/Footer';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
+import adminUsuariosData from '@/data/adminUsuarios.json';
 import './MyPets.css';
 
 const speciesOptions = [
@@ -117,6 +118,7 @@ const MyPets = () => {
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState('');
   const [filterSpecies, setFilterSpecies] = useState('all');
+  const [expandedPhoto, setExpandedPhoto] = useState(null);
 
   const storageKey = useMemo(() => {
     if (!user) return null;
@@ -126,19 +128,79 @@ const MyPets = () => {
   }, [user]);
 
   useEffect(() => {
-    if (!storageKey) return;
+    if (!storageKey || !user) return;
     try {
+      const userEmail = user.email?.toLowerCase();
+      
+      // Primero verificar si hay datos actualizados en adminUsuarios.json
+      if (adminUsuariosData?.mascotas && Array.isArray(adminUsuariosData.mascotas)) {
+        const userPets = adminUsuariosData.mascotas.find(
+          (m) => m.email?.toLowerCase() === userEmail
+        );
+        
+        if (userPets && userPets.pets && Array.isArray(userPets.pets) && userPets.pets.length > 0) {
+          // Agregar fecha de creación si no existe
+          const petsWithDates = userPets.pets.map((pet) => ({
+            ...pet,
+            createdAt: pet.createdAt || new Date().toISOString(),
+            updatedAt: pet.updatedAt || new Date().toISOString(),
+          }));
+          
+          // Verificar si hay cambios en las mascotas (comparar IDs)
+          const stored = localStorage.getItem(storageKey);
+          let shouldUpdate = true;
+          
+          if (stored) {
+            try {
+              const parsed = JSON.parse(stored);
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                // Si las mascotas tienen los mismos IDs pero hay diferencias, actualizar
+                const storedIds = parsed.map(p => p.id).sort();
+                const newIds = petsWithDates.map(p => p.id).sort();
+                
+                if (JSON.stringify(storedIds) === JSON.stringify(newIds)) {
+                  // Verificar si hay diferencias en los datos
+                  const hasChanges = petsWithDates.some(newPet => {
+                    const storedPet = parsed.find(p => p.id === newPet.id);
+                    if (!storedPet) return true;
+                    // Comparar campos importantes (foto, nombre, etc.)
+                    return storedPet.photo !== newPet.photo || 
+                           storedPet.name !== newPet.name ||
+                           storedPet.breed !== newPet.breed;
+                  });
+                  
+                  if (!hasChanges) {
+                    setPets(parsed);
+                    shouldUpdate = false;
+                  }
+                }
+              }
+            } catch (e) {
+              console.warn('Error al parsear mascotas almacenadas', e);
+            }
+          }
+          
+          if (shouldUpdate) {
+            setPets(petsWithDates);
+            // Guardar en localStorage para futuras cargas
+            localStorage.setItem(storageKey, JSON.stringify(petsWithDates));
+          }
+          return;
+        }
+      }
+      
+      // Si no hay mascotas en adminUsuarios.json, cargar de localStorage
       const stored = localStorage.getItem(storageKey);
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
+        if (Array.isArray(parsed) && parsed.length > 0) {
           setPets(parsed);
         }
       }
     } catch (error) {
       console.error('Error al leer mascotas guardadas', error);
     }
-  }, [storageKey]);
+  }, [storageKey, user]);
 
   useEffect(() => {
     if (!storageKey) return;
@@ -685,7 +747,13 @@ const MyPets = () => {
                     <header className="pet-card-header">
                       <div className="pet-avatar">
                         {pet.photo ? (
-                          <img src={pet.photo} alt={pet.name} />
+                          <img 
+                            src={pet.photo} 
+                            alt={pet.name}
+                            onClick={() => setExpandedPhoto(pet.photo)}
+                            style={{ cursor: 'pointer' }}
+                            title="Clic para ampliar"
+                          />
                         ) : (
                           <span aria-hidden="true">
                             {pet.name?.charAt(0).toUpperCase() || '🐾'}
@@ -802,6 +870,25 @@ const MyPets = () => {
         </section>
       </main>
       <Footer />
+      
+      {/* Modal para foto ampliada */}
+      {expandedPhoto && (
+        <div 
+          className="photo-modal-overlay" 
+          onClick={() => setExpandedPhoto(null)}
+        >
+          <div className="photo-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="photo-modal-close"
+              onClick={() => setExpandedPhoto(null)}
+              aria-label="Cerrar"
+            >
+              <i className="fa-solid fa-times"></i>
+            </button>
+            <img src={expandedPhoto} alt="Foto ampliada" />
+          </div>
+        </div>
+      )}
     </>
   );
 };

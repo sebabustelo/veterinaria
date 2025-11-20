@@ -114,6 +114,50 @@ const savePets = (user, pets) => {
 };
 
 const SAMPLE_PETS_BY_USER = {
+  "juan@vettix.com": [
+    {
+      id: "pet-juan-1",
+      name: "Laika",
+      species: "dog",
+      breed: "Mestizo",
+      age: 5,
+      weight: 25,
+      sex: "female",
+      color: "Negro con manchas blancas en pecho y patas",
+      birthDate: "2019-06-10",
+      microchip: "123456789012345",
+      vaccinated: true,
+      dewormed: true,
+      sterilized: true,
+      allergies: null,
+      chronicConditions: null,
+      notes: "Consulta general y plan de vacunación. Muy activa y juguetona, requiere ejercicio diario.",
+      photo: "/img/mascotas/laika.jpg",
+      instagram: "laika_vettix",
+      allowTagging: true,
+    },
+    {
+      id: "pet-juan-2",
+      name: "Kanon",
+      species: "cat",
+      breed: "Mestizo",
+      age: 4,
+      weight: 5.2,
+      sex: "male",
+      color: "Naranja atigrado",
+      birthDate: "2020-08-20",
+      microchip: "987654321098765",
+      vaccinated: true,
+      dewormed: true,
+      sterilized: true,
+      allergies: null,
+      chronicConditions: null,
+      notes: "Control anual de salud. Gato tranquilo y cariñoso.",
+      photo: "/img/mascotas/kanon.jpg",
+      instagram: "kanon_vettix",
+      allowTagging: true,
+    },
+  ],
   "mariana.lopez@vettix.com": [
     {
       id: "pet-simba",
@@ -222,7 +266,7 @@ const serviciosComplementarios = [
     descripcion:
       "Especialista en estilismo canino, tratamientos hipoalergénicos y spa relajante.",
     dias: [2, 4, 6],
-    horarios: ["10:00", "12:00", "15:30"],
+    horarios: ["09:00", "10:00", "11:00", "12:00", "13:30", "14:30", "15:30", "16:30", "17:30"],
     sucursales: [1, 3, 5],
   },
   {
@@ -232,7 +276,7 @@ const serviciosComplementarios = [
     descripcion:
       "Adiestramiento positivo, obediencia básica y resolución de problemas de conducta.",
     dias: [1, 3, 5],
-    horarios: ["09:00", "11:00", "14:00", "17:00"],
+    horarios: ["08:30", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
     sucursales: [1, 2, 4],
   },
   {
@@ -242,7 +286,7 @@ const serviciosComplementarios = [
     descripcion:
       "Coordinadora del programa Vettix Walkers con circuitos seguros y reporte en vivo.",
     dias: [1, 2, 3, 4, 5],
-    horarios: ["08:00", "12:30", "18:00"],
+    horarios: ["07:30", "08:00", "09:00", "10:00", "11:00", "12:00", "12:30", "13:30", "14:30", "16:00", "17:00", "18:00", "19:00"],
     sucursales: [1, 2, 3, 4, 5],
   },
   {
@@ -252,7 +296,7 @@ const serviciosComplementarios = [
     descripcion:
       "Especialista en razas de pelo largo, cortes de competición y tratamientos detox.",
     dias: [1, 3, 5],
-    horarios: ["11:00", "13:30", "16:30"],
+    horarios: ["09:30", "10:30", "11:00", "12:00", "13:00", "13:30", "14:30", "15:30", "16:30", "17:30"],
     sucursales: [3, 4],
   },
 ];
