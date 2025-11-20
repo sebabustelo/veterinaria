@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vettix-v4';
+const CACHE_NAME = 'vettix-v5';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -49,9 +49,16 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
-  // No cachear el manifest.json, siempre obtener la versión más reciente
-  if (url.pathname === '/manifest.json') {
-    event.respondWith(fetch(event.request));
+  // No cachear el manifest.json ni archivos JS/CSS en producción - siempre obtener la versión más reciente
+  if (url.pathname === '/manifest.json' || 
+      url.pathname.endsWith('.js') || 
+      url.pathname.endsWith('.css')) {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        // Si falla la red, intentar devolver del cache
+        return caches.match(event.request);
+      })
+    );
     return;
   }
   
