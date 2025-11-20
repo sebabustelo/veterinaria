@@ -97,7 +97,7 @@ const Admin = () => {
     {
       key: "negocio",
       title: "Gestión de negocio",
-      description: "Controlá todos los módulos orientados a la experiencia del cliente y los servicios de Vettix.",
+      description: "Controlá todos los módulos orientados a la experiencia del cliente y los servicios.",
       cards: negocioCards,
     },
     {
@@ -114,7 +114,7 @@ const Admin = () => {
         <title>Panel de Administración | Vettix</title>
         <meta
           name="description"
-          content="Panel administrativo de Vettix: gestioná productos, pedidos, turnos, usuarios y configuraciones internas desde un mismo lugar."
+          content="Panel administrativo: gestioná productos, pedidos, turnos, usuarios y configuraciones internas desde un mismo lugar."
         />
       </Helmet>
       <HeaderAdmin />

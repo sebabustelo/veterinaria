@@ -654,9 +654,9 @@ const AdminHistoriasClinicas = () => {
 
         {mascotaActiva && (
           <section className="historia-clinica-section">
-            <header className="selection-header">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
-                <div>
+            <header className="historia-section-header">
+              <div className="historia-header-content">
+                <div className="historia-header-text">
                   <h2>Historia Clínica de {mascotaActiva.name}</h2>
                   <p>Registro completo de consultas, diagnósticos y tratamientos.</p>
                 </div>
@@ -678,7 +678,7 @@ const AdminHistoriasClinicas = () => {
                       title="Enviar por email"
                     >
                       <i className="fa-solid fa-envelope"></i>
-                      Enviar por email
+                      <span>Enviar email</span>
                     </button>
                   </div>
                 )}

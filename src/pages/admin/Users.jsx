@@ -107,6 +107,8 @@ const AdminUsuarios = () => {
   const [rolFiltro, setRolFiltro] = useState('Todos');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [nuevoUsuario, setNuevoUsuario] = useState(initialUserForm);
+  const [editingUserId, setEditingUserId] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState({ isOpen: false, userId: null, userName: '' });
 
   const normalize = (value) => (value ?? '').toString().toLowerCase();
 
@@ -166,7 +168,73 @@ const AdminUsuarios = () => {
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setNuevoUsuario(initialUserForm);
+    setEditingUserId(null);
   }, []);
+
+  const handleEditUser = (persona) => {
+    const userFormData = {
+      nombre: persona.nombre || '',
+      apellido: persona.apellido || '',
+      email: persona.email || '',
+      telefono: persona.telefono || '',
+      dni: persona.dni || '',
+      activo: persona.activo ?? true,
+      roles: [...(persona.roles || [])],
+      matricula: persona.matricula || '',
+      specialties: [...(persona.especialidades || [])],
+      specialtyInput: '',
+      servicios: [...(persona.servicios || [])],
+      systemRole: persona.rolesSistema?.[0] || '',
+      mascotas: [...(persona.mascotas || [])],
+      petDraft: {
+        name: '',
+        species: '',
+        breed: '',
+        sex: '',
+        age: '',
+        weight: '',
+        birthDate: '',
+        color: '',
+        microchip: '',
+        vaccinated: false,
+        dewormed: false,
+        sterilized: false,
+        allergies: '',
+        chronicConditions: '',
+        notes: ''
+      }
+    };
+    setNuevoUsuario(userFormData);
+    setEditingUserId(persona.id);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteUser = (personaId) => {
+    const persona = personas.find((p) => p.id === personaId);
+    if (!persona) return;
+
+    setDeleteConfirm({
+      isOpen: true,
+      userId: personaId,
+      userName: persona.nombreCompleto
+    });
+  };
+
+  const confirmDelete = () => {
+    if (deleteConfirm.userId) {
+      // Marcar usuario como inactivo (baja lógica)
+      setPersonas((prev) =>
+        prev.map((p) =>
+          p.id === deleteConfirm.userId ? { ...p, activo: false } : p
+        )
+      );
+      setDeleteConfirm({ isOpen: false, userId: null, userName: '' });
+    }
+  };
+
+  const cancelDelete = () => {
+    setDeleteConfirm({ isOpen: false, userId: null, userName: '' });
+  };
 
   const handleBaseFieldChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -361,8 +429,8 @@ const AdminUsuarios = () => {
     }
     if (nuevoUsuario.roles.includes('usuario_sistema')) tipoParts.push('usuario_sistema');
 
-    const nuevaPersona = {
-      id: Date.now(),
+    const personaData = {
+      id: editingUserId || Date.now(),
       nombre: nuevoUsuario.nombre.trim(),
       apellido: nuevoUsuario.apellido.trim(),
       email: nuevoUsuario.email.trim(),
@@ -383,8 +451,16 @@ const AdminUsuarios = () => {
         : []
     };
 
-    const personaNormalizada = normalizarPersona(nuevaPersona);
-    setPersonas((prev) => [...prev, personaNormalizada]);
+    const personaNormalizada = normalizarPersona(personaData);
+    
+    if (editingUserId) {
+      // Modo edición: actualizar usuario existente
+      setPersonas((prev) => prev.map((p) => (p.id === editingUserId ? personaNormalizada : p)));
+    } else {
+      // Modo creación: agregar nuevo usuario
+      setPersonas((prev) => [...prev, personaNormalizada]);
+    }
+    
     closeModal();
   };
 
@@ -495,6 +571,7 @@ const AdminUsuarios = () => {
                   <th>Roles</th>
                   <th>Detalles</th>
                   <th>Estado</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -543,6 +620,28 @@ const AdminUsuarios = () => {
                         {persona.activo ? 'Activo' : 'Inactivo'}
                       </span>
                     </td>
+                    <td data-label="Acciones">
+                      <div className="user-actions">
+                        <button
+                          type="button"
+                          className="btn-action btn-edit"
+                          onClick={() => handleEditUser(persona)}
+                          title="Editar usuario"
+                          aria-label="Editar usuario"
+                        >
+                          <i className="fa-solid fa-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-action btn-delete"
+                          onClick={() => handleDeleteUser(persona.id)}
+                          title="Eliminar usuario"
+                          aria-label="Eliminar usuario"
+                        >
+                          <i className="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -556,8 +655,8 @@ const AdminUsuarios = () => {
           <div className="users-modal">
             <header className="users-modal__header">
               <div>
-                <h2>Alta de usuario</h2>
-                <p>Completá los datos y asigná los roles correspondientes.</p>
+                <h2>{editingUserId ? 'Editar usuario' : 'Alta de usuario'}</h2>
+                <p>{editingUserId ? 'Modificá los datos del usuario.' : 'Completá los datos y asigná los roles correspondientes.'}</p>
               </div>
               <button type="button" className="users-modal__close" onClick={closeModal} aria-label="Cerrar">
                 <i className="fa-solid fa-xmark"></i>
@@ -1042,6 +1141,51 @@ const AdminUsuarios = () => {
                 </button>
               </footer>
             </form>
+          </div>
+        </div>
+      )}
+
+      {deleteConfirm.isOpen && (
+        <div className="users-modal-backdrop" role="dialog" aria-modal="true" onClick={cancelDelete}>
+          <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="delete-confirm-icon">
+              <i className="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <header className="delete-confirm-header">
+              <h2>¿Dar de baja usuario?</h2>
+            </header>
+            <div className="delete-confirm-body">
+              <p>
+                Estás por dar de baja a <strong>{deleteConfirm.userName}</strong> del sistema.
+              </p>
+              <p className="delete-info">
+                <i className="fa-solid fa-info-circle"></i>
+                <span>
+                  Se realizará una <strong>baja lógica</strong>. El usuario quedará inactivo, pero se conservará todo su historial y datos asociados por cuestiones de auditoría y trazabilidad.
+                </span>
+              </p>
+              <p className="delete-warning">
+                <i className="fa-solid fa-circle-exclamation"></i>
+                El usuario no podrá acceder al sistema, pero sus registros permanecerán disponibles para consultas administrativas.
+              </p>
+            </div>
+            <footer className="delete-confirm-footer">
+              <button
+                type="button"
+                className="btn-cancel"
+                onClick={cancelDelete}
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                className="btn-delete-confirm"
+                onClick={confirmDelete}
+              >
+                <i className="fa-solid fa-user-slash"></i>
+                Dar de baja
+              </button>
+            </footer>
           </div>
         </div>
       )}

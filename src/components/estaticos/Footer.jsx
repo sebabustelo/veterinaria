@@ -5,23 +5,24 @@ import { faFacebook, faInstagram, faTwitter } from "@fortawesome/free-brands-svg
 
 const Footer = () => {
     return (
-        <footer >
-            <div >
-                <div className="footer-section" style={{ display: "flex", gap: "18px", alignItems: "center", justifyContent: "center" }}>
-                    <a href="#" aria-label="Facebook">
-                        <FontAwesomeIcon icon={faFacebook} style={{ color: "rgba(255, 255, 255, 0.95)", fontSize: "2.5rem" }} />
-                    </a>
-                    <a href="#" aria-label="Twitter">
-                        <FontAwesomeIcon icon={faTwitter} style={{ color: "rgba(255, 255, 255, 0.95)", fontSize: "2.5rem" }} />
-                    </a>
-                    <a href="#" aria-label="Instagram">
-                        <FontAwesomeIcon icon={faInstagram} style={{ color: "rgba(255, 255, 255, 0.95)", fontSize: "2.5rem" }} />
-                    </a>
+        <footer>
+            <div className="footer-content">
+                <div className="footer-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2rem", gridColumn: "1 / -1" }}>
+                    <div className="footer-social">
+                        <a href="#" aria-label="Facebook">
+                            <FontAwesomeIcon icon={faFacebook} className="footer-social-icon" />
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <FontAwesomeIcon icon={faTwitter} className="footer-social-icon" />
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <FontAwesomeIcon icon={faInstagram} className="footer-social-icon" />
+                        </a>
+                    </div>
                 </div>
-                <div className="footer-section" style={{ display: "flex", gap: "1.5rem", alignItems: "center", justifyContent: "center", flexWrap: "wrap", fontSize: "1.2rem" }}>                    
-                    <span> &copy; 2025 Vettix.</span>
-                </div>
-                
+            </div>
+            <div className="footer-bottom" style={{ textAlign: "center", justifyContent: "center" }}>
+                <span>&copy; 2025 Vettix. Todos los derechos reservados.</span>
             </div>
         </footer>
     );

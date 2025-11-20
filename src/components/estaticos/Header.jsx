@@ -146,7 +146,11 @@ const Header = () => {
                                         <i className="fa-solid fa-shopping-bag"></i> Mis Pedidos
                                     </Link>
                                 </li>
-
+                                <li className="nav-item mobile-user-menu">
+                                <Link to="/mis-mascotas" className="nav-link" onClick={() => setUserMenuOpen(false)}>
+                                    <i className="fa-solid fa-paw"></i> Mis Mascotas
+                                </Link>
+                                </li>
                                 <li className="nav-item mobile-user-menu">
                                     <Link to="/" className='nav-link' onClick={() => {
                                         logout();
