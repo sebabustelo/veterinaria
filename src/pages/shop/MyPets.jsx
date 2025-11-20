@@ -341,6 +341,8 @@ const MyPets = () => {
       chronicConditions: pet.chronicConditions || '',
       notes: pet.notes || '',
       photo: pet.photo || '',
+      instagram: pet.instagram || '',
+      allowTagging: Boolean(pet.allowTagging),
     });
     setEditingId(pet.id);
     showInfo(`Editando la ficha de ${pet.name}`);
