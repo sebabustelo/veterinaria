@@ -6,10 +6,13 @@
         "apellido": "Perez",
         "dni": "30111222",
         "telefono": "1122334455",
-        "email": "juanperez@mail.com",
+        "email": "juan@vettix.com",
         "roles": ["cliente"],
         "tipo": "cliente",
-        "activo": true
+        "activo": true,
+        "direccion": "Av. Corrientes 1234",
+        "ciudad": "Buenos Aires",
+        "codigoPostal": "C1043AAX"
       },
       {
         "id": 2,

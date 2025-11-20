@@ -111,6 +111,9 @@ const Header = () => {
                                 <div className="user-dropdown">
                                     {user ? (
                                         <>
+                                            <Link to="/mi-perfil" className="dropdown-item" onClick={() => setUserMenuOpen(false)}>
+                                                <i className="fa-solid fa-user"></i> Mis Datos
+                                            </Link>
                                             <Link to="/mis-pedidos" className="dropdown-item" onClick={() => setUserMenuOpen(false)}>
                                                 <i className="fa-solid fa-shopping-bag"></i> Mis Pedidos
                                             </Link>
@@ -141,6 +144,11 @@ const Header = () => {
                         {/* Menú de usuario para móvil */}
                         {user ? (
                             <>
+                                <li className="nav-item mobile-user-menu">
+                                    <Link to="/mi-perfil" className='nav-link' onClick={handleClose}>
+                                        <i className="fa-solid fa-user"></i> Mis Datos
+                                    </Link>
+                                </li>
                                 <li className="nav-item mobile-user-menu">
                                     <Link to="/mis-pedidos" className='nav-link' onClick={handleClose}>
                                         <i className="fa-solid fa-shopping-bag"></i> Mis Pedidos

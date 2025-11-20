@@ -20,6 +20,7 @@ const AdminHistoriasClinicas = lazy(() => import('@/pages/admin/AdminHistoriasCl
 import Checkout from '@/pages/shop/Checkout'
 import MyOrders from '@/pages/shop/MyOrders'
 import MyPets from '@/pages/shop/MyPets'
+import MyProfile from '@/pages/shop/MyProfile'
 import RutasProtegidas from '@/auth/RutasProtegidas'
 import { ProductProvider, CartProvider, AuthProvider, useAuth, UserProvider, UsersProvider, ToastProvider, useToast, RealTimeProvider } from '@/context'
 import ResetPassword from '@/components/ResetPassword'
@@ -146,6 +147,11 @@ function AppRoutes() {
           </RutasProtegidas>
         } />
 
+        <Route path='/mi-perfil' element={
+          <RutasProtegidas isAuthenticated={!!user}>
+            <MyProfile />
+          </RutasProtegidas>
+        } />
         <Route path='/mis-pedidos' element={
           <RutasProtegidas isAuthenticated={!!user}>
             <MyOrders />
