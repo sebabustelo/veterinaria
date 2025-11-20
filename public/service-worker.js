@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vettix-v3';
+const CACHE_NAME = 'vettix-v4';
 const urlsToCache = [
   '/',
   '/index.html',
