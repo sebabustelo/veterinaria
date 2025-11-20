@@ -76,6 +76,7 @@ const initialUserForm = {
   specialties: [],
   specialtyInput: '',
   servicios: [],
+  servicioInput: '',
   systemRole: '',
   mascotas: [],
   petDraft: {
@@ -153,6 +154,16 @@ const AdminUsuarios = () => {
     return Array.from(set).sort((a, b) => a.localeCompare(b, 'es'));
   }, [personas]);
 
+  const serviciosDisponibles = useMemo(() => {
+    const set = new Set(SERVICIO_TIPOS);
+    personas.forEach((persona) => {
+      (persona.servicios ?? []).forEach((servicio) => {
+        if (servicio) set.add(servicio);
+      });
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b, 'es'));
+  }, [personas]);
+
   const personasFiltradas = useMemo(() => {
     const term = normalize(searchTerm);
     return personas.filter((persona) => {
@@ -184,6 +195,7 @@ const AdminUsuarios = () => {
       specialties: [...(persona.especialidades || [])],
       specialtyInput: '',
       servicios: [...(persona.servicios || [])],
+      servicioInput: '',
       systemRole: persona.rolesSistema?.[0] || '',
       mascotas: [...(persona.mascotas || [])],
       petDraft: {
@@ -290,6 +302,16 @@ const AdminUsuarios = () => {
       ...prev,
       specialties: prev.specialties.includes(value) ? prev.specialties : [...prev.specialties, value],
       specialtyInput: ''
+    }));
+  };
+
+  const handleAddServicio = () => {
+    const value = nuevoUsuario.servicioInput.trim();
+    if (!value) return;
+    setNuevoUsuario((prev) => ({
+      ...prev,
+      servicios: prev.servicios?.includes(value) ? prev.servicios : [...(prev.servicios ?? []), value],
+      servicioInput: ''
     }));
   };
 
@@ -452,7 +474,7 @@ const AdminUsuarios = () => {
     };
 
     const personaNormalizada = normalizarPersona(personaData);
-    
+
     if (editingUserId) {
       // Modo edición: actualizar usuario existente
       setPersonas((prev) => prev.map((p) => (p.id === editingUserId ? personaNormalizada : p)));
@@ -460,7 +482,7 @@ const AdminUsuarios = () => {
       // Modo creación: agregar nuevo usuario
       setPersonas((prev) => [...prev, personaNormalizada]);
     }
-    
+
     closeModal();
   };
 
@@ -518,6 +540,24 @@ const AdminUsuarios = () => {
             <span className="summary-sub">Sincronización de datos de personas</span>
           </article>
         </section>
+        <div className="admin-actions-bar">
+          <button
+            type="button"
+            className="admin-card-link"
+            onClick={() => navigate('/admin')}
+          >
+            <i className="fa-solid fa-arrow-left"></i>
+            Volver al Admin
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <i className="fa-solid fa-user-plus"></i>
+            Nuevo usuario
+          </button>
+        </div>
 
         <section className="users-toolbar">
           <div className="search-box">
@@ -533,23 +573,6 @@ const AdminUsuarios = () => {
                 <i className="fa-solid fa-xmark"></i>
               </button>
             )}
-          </div>
-          <div className='admin-actions-bar'>
-            <button
-              type="button"
-              className="admin-card-link"
-              onClick={() => setIsModalOpen(true)}
-            >
-              <i className="fa-solid fa-user-plus"></i> Nuevo usuario
-            </button>
-            <button
-              type="button"
-              className="admin-card-link"
-              onClick={() => navigate('/admin')}
-            >
-              <i className="fa-solid fa-arrow-left"></i>
-              Volver al Admin
-            </button>
           </div>
 
 
@@ -655,7 +678,7 @@ const AdminUsuarios = () => {
           <div className="users-modal">
             <header className="users-modal__header">
               <div>
-                <h2>{editingUserId ? 'Editar usuario' : 'Alta de usuario'}</h2>
+                <h2>{editingUserId ? 'Editar usuario' : 'Nuevo usuario'}</h2>
                 <p>{editingUserId ? 'Modificá los datos del usuario.' : 'Completá los datos y asigná los roles correspondientes.'}</p>
               </div>
               <button type="button" className="users-modal__close" onClick={closeModal} aria-label="Cerrar">
@@ -694,6 +717,18 @@ const AdminUsuarios = () => {
                     onChange={handleBaseFieldChange}
                     required
                   />
+                  {nuevoUsuario.email && !editingUserId && (
+                    <small className="form-hint" style={{
+                      display: 'block',
+                      marginTop: '0.5rem',
+                      color: 'var(--accent)',
+                      fontSize: '0.875rem',
+                      lineHeight: '1.4'
+                    }}>
+                      <i className="fa-solid fa-envelope" style={{ marginRight: '0.5rem' }}></i>
+                      Se enviará un email para generar la contraseña de acceso.
+                    </small>
+                  )}
                 </div>
                 <div className="form-control">
                   <label htmlFor="nuevo-telefono">Teléfono</label>
@@ -731,7 +766,7 @@ const AdminUsuarios = () => {
               </section>
 
               <section className="form-block">
-                <h3>Roles</h3>
+                <h3>Tipo</h3>
                 <div className="role-selection">
                   {ROLE_OPTIONS.map((rol) => (
                     <label key={rol.value} className="role-option">
@@ -812,20 +847,40 @@ const AdminUsuarios = () => {
                 <section className="form-block">
                   <h3>Tipos de servicio</h3>
                   <p className="form-hint">Seleccioná uno o varios perfiles operativos.</p>
-                  <div className="specialties-grid">
-                    {SERVICIO_TIPOS.map((tipo) => {
-                      const active = nuevoUsuario.servicios?.includes(tipo);
-                      return (
-                        <button
-                          type="button"
-                          key={tipo}
-                          className={`specialty-chip ${active ? 'active' : ''}`}
-                          onClick={() => toggleServicioTipo(tipo)}
-                        >
-                          {tipo}
-                        </button>
-                      );
-                    })}
+                  <div className="form-control">
+                    <label>Servicios disponibles</label>
+                    <div className="specialties-grid">
+                      {serviciosDisponibles.map((tipo) => {
+                        const active = nuevoUsuario.servicios?.includes(tipo);
+                        return (
+                          <button
+                            type="button"
+                            key={tipo}
+                            className={`specialty-chip ${active ? 'active' : ''}`}
+                            onClick={() => toggleServicioTipo(tipo)}
+                          >
+                            {tipo}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="specialty-input">
+                      <input
+                        name="servicioInput"
+                        value={nuevoUsuario.servicioInput}
+                        onChange={handleBaseFieldChange}
+                        placeholder="Agregar otro servicio"
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddServicio();
+                          }
+                        }}
+                      />
+                      <button type="button" onClick={handleAddServicio}>
+                        Añadir
+                      </button>
+                    </div>
                   </div>
                   {nuevoUsuario.servicios?.length === 0 && (
                     <p className="form-hint warning">Debes elegir al menos un tipo de servicio.</p>
