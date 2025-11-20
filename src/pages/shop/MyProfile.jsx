@@ -135,7 +135,7 @@ const MyProfile = () => {
       <div className="my-profile-page">
         <Header />
         <main className="main-content">
-          <section className="profile-hero">
+          <section className="admin-hero">
             <h1>Mi Perfil</h1>
             <p>Necesitás iniciar sesión para ver tu perfil.</p>
           </section>
@@ -149,7 +149,7 @@ const MyProfile = () => {
     <div className="my-profile-page">
       <Header />
       <main className="main-content">
-        <section className="profile-hero">
+        <section className="admin-hero">
           <div>
             <span className="hero-tag">Mi Perfil</span>
             <h1>Mis Datos</h1>
